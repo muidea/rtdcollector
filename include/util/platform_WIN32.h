@@ -161,25 +161,13 @@
 	#define UTIL_MSVC_VERSION 141
 #endif
 
-
-// Unicode Support
-#if defined(UNICODE) && !defined(UTIL_WIN32_UTF8)
-	#define UTIL_WIN32_UTF8
-#endif
-
-
-#if !defined(UTIL_WIN32_UTF8)
-	#pragma message("Compiling POCO on Windows without #define UTIL_WIN32_UTF8 is deprecated.")
-#endif
-
-
 // Turn off some annoying warnings
 #if defined(_MSC_VER)
 	#pragma warning(disable:4018)	// signed/unsigned comparison
 	#pragma warning(disable:4250)	// VC++ 11.0: inheriting from std stream classes produces C4250 warning;
 									// see <http://connect.microsoft.com/VisualStudio/feedback/details/733720/inheriting-from-std-fstream-produces-c4250-warning>
 	#pragma warning(disable:4251)	// ... needs to have dll-interface warning
-	#pragma warning(disable:4275)	// non dll-interface class 'std::exception' used as base for dll-interface class 'Poco::Exception'
+	#pragma warning(disable:4275)	// non dll-interface class 'std::exception' used as base for dll-interface class 'Util::Exception'
 	#pragma warning(disable:4344)	// behavior change: use of explicit template arguments results in call to '...' but '...' is a better match
 	#pragma warning(disable:4351)	// new behavior: elements of array '...' will be default initialized
 	#pragma warning(disable:4355)	// 'this' : used in base member initializer list

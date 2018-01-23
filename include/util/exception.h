@@ -1,18 +1,6 @@
 //
-// Exception.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Core
-// Module:  Exception
-//
-// Definition of various Poco exception classes.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __EXCEPTION_H_1652__
 #define __EXCEPTION_H_1652__
@@ -27,7 +15,6 @@ namespace Util {
 
 class Util_API Exception: public std::exception
 	/// This is the base class for all exceptions defined
-	/// in the Poco class library.
 {
 public:
 	Exception(const std::string& msg, int code = 0);

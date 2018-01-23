@@ -7,8 +7,6 @@
 
 
 // Define to enable Windows Unicode (UTF-8) support
-// NOTE: As of POCO C++ Libraries release 1.6.0, compiling POCO
-// without UTIL_WIN32_UTF8 defined on Windows is deprecated.
 // #define UTIL_WIN32_UTF8
 
 
@@ -50,17 +48,6 @@
 	#define UTIL_THREAD_STACK_SIZE 0
 #endif
 
-
-// Define to override system-provided
-// minimum thread priority value on POSIX
-// platforms (returned by Poco::Thread::getMinOSPriority()).
-// #define UTIL_THREAD_PRIORITY_MIN 0
-
-
-// Define to override system-provided
-// maximum thread priority value on POSIX
-// platforms (returned by Poco::Thread::getMaxOSPriority()).
-// #define UTIL_THREAD_PRIORITY_MAX 31
 
 
 // Define to disable small object optimization. If not
@@ -124,23 +111,6 @@
 // #define UTIL_MSVC_SECURE_WARNINGS
 
 
-// No support for INI file configurations in
-// Poco::Util::Application.
-// #define UTIL_UTIL_NO_INIFILECONFIGURATION
-
-
-// No support for JSON configuration in
-// Poco::Util::Application. Avoids linking of JSON
-// library and saves a few 100 Kbytes.
-// #define UTIL_UTIL_NO_JSONCONFIGURATION
-
-
-// No support for XML configuration in
-// Poco::Util::Application. Avoids linking of XML
-// library and saves a few 100 Kbytes.
-// #define UTIL_UTIL_NO_XMLCONFIGURATION
-
-
 // No IPv6 support
 // Define to disable IPv6
 // #define UTIL_NET_NO_IPv6
@@ -154,11 +124,6 @@
 // Uncomment to disable the use of bundled OpenSSL binaries
 // (Windows only)
 // #define UTIL_EXTERNAL_OPENSSL
-
-
-// Define to prevent changing the suffix for shared libraries
-// to "d.so", "d.dll", etc. for _DEBUG builds in Poco::SharedLibrary.
-// #define UTIL_NO_SHARED_LIBRARY_DEBUG_SUFFIX
 
 
 // Disarm UTIL_DEPRECATED macro.

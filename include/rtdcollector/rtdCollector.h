@@ -1,5 +1,6 @@
 #ifndef __RTDCOLLECTOR_H_0947__
 #define __RTDCOLLECTOR_H_0947__
+#include "def.h"
 #include "rtdInfo.h"
 
 namespace Rtd
@@ -13,13 +14,13 @@ public:
   virtual void onReload();
 };
 
-class RtdCollector
+class RtdCollector_API RtdCollector
 {
 public:
   RtdCollector(){};
   virtual ~RtdCollector(){};
 
-  void initialize(RtdCollectorSink* pSink);
+  void initialize(RtdCollectorSink *pSink);
 
   void uninitialize();
 
@@ -27,15 +28,14 @@ public:
 
   void stop();
 
-  void pushConfigInfo(ConfigInfo const& cfgInfo);
+  void pushConfigInfo(ConfigInfo const &cfgInfo);
 
-  void pushRtdData(RtdDataVector const& rtdData);
+  void pushRtdData(RtdDataVector const &rtdData);
 
-  void pushRtdEvent(RtdEventVector const& rtdEvent);
+  void pushRtdEvent(RtdEventVector const &rtdEvent);
 };
-
 }
 
-Rtd::RtdCollector *GetCollector();
+RtdCollector_API Rtd::RtdCollector* GetCollector();
 
 #endif // __RTDCOLLECTOR_H_0947__

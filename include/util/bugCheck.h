@@ -188,7 +188,7 @@ struct util_static_assert_test
 #else
 #define util_static_assert(B) \
 	typedef util_static_assert_test<sizeof(UTIL_STATIC_ASSERTION_FAILURE<(bool) (B)>)> \
-		UTIL_JOIN(util_static_assert_typedef_, __LINE__) UTIL_UNUSED
+		UTIL_JOIN(util_static_assert_typedef_, __LINE__) PLATFORM_UNUSED
 #endif
 
 

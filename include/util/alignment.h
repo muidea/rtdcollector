@@ -10,7 +10,7 @@
 #include <cstddef>
 
 
-#ifdef UTIL_ENABLE_CPP11
+#ifdef PLATFORM_ENABLE_CPP11
 
 
 	#include <type_traits>

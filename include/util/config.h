@@ -11,7 +11,7 @@
 
 
 // Define to enable C++11 support
-#define UTIL_ENABLE_CPP11
+#define PLATFORM_ENABLE_CPP11
 
 
 // Define to disable implicit linking
@@ -45,7 +45,7 @@
 // Define to desired default thread stack size
 // Zero means OS default
 #ifndef UTIL_THREAD_STACK_SIZE
-	#define UTIL_THREAD_STACK_SIZE 0
+	#define PLATFORM_THREAD_STACK_SIZE 0
 #endif
 
 

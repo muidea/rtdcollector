@@ -134,21 +134,76 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ascii.cpp" />
+    <ClCompile Include="atomicCounter.cpp" />
     <ClCompile Include="bugcheck.cpp" />
     <ClCompile Include="debugger.cpp" />
+    <ClCompile Include="errorHandler.cpp" />
+    <ClCompile Include="event.cpp" />
     <ClCompile Include="exception.cpp" />
+    <ClCompile Include="fPEnvironment.cpp" />
+    <ClCompile Include="memoryStream.cpp" />
+    <ClCompile Include="mutex.cpp" />
+    <ClCompile Include="numberFormatter.cpp" />
+    <ClCompile Include="numericString.cpp" />
+    <ClCompile Include="refCountedObject.cpp" />
+    <ClCompile Include="runnable.cpp" />
+    <ClCompile Include="signalHandler.cpp" />
+    <ClCompile Include="string.cpp" />
+    <ClCompile Include="thread.cpp" />
+    <ClCompile Include="threadLocal.cpp" />
+    <ClCompile Include="timespan.cpp" />
+    <ClCompile Include="timestamp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\util\alignment.h" />
+    <ClInclude Include="..\..\include\util\ascii.h" />
+    <ClInclude Include="..\..\include\util\atomicCounter.h" />
+    <ClInclude Include="..\..\include\util\autoPtr.h" />
+    <ClInclude Include="..\..\include\util\buffer.h" />
     <ClInclude Include="..\..\include\util\bugCheck.h" />
     <ClInclude Include="..\..\include\util\config.h" />
     <ClInclude Include="..\..\include\util\debugger.h" />
+    <ClInclude Include="..\..\include\util\errorHandler.h" />
+    <ClInclude Include="..\..\include\util\event.h" />
+    <ClInclude Include="..\..\include\util\event_WIN32.h" />
     <ClInclude Include="..\..\include\util\exception.h" />
-    <ClInclude Include="..\..\include\util\platform_POSIX.h" />
+    <ClInclude Include="..\..\include\util\fPEnvironment.h" />
+    <ClInclude Include="..\..\include\util\fPEnvironment_C99.h" />
+    <ClInclude Include="..\..\include\util\fPEnvironment_WIN32.h" />
+    <ClInclude Include="..\..\include\util\memoryStream.h" />
+    <ClInclude Include="..\..\include\util\mutex.h" />
+    <ClInclude Include="..\..\include\util\mutex_WIN32.h" />
+    <ClInclude Include="..\..\include\util\numberFormatter.h" />
+    <ClInclude Include="..\..\include\util\numericString.h" />
     <ClInclude Include="..\..\include\util\platform_WIN32.h" />
+    <ClInclude Include="..\..\include\util\refCountedObject.h" />
+    <ClInclude Include="..\..\include\util\runnable.h" />
+    <ClInclude Include="..\..\include\util\runnableAdapter.h" />
+    <ClInclude Include="..\..\include\util\scopedLock.h" />
+    <ClInclude Include="..\..\include\util\scopedUnlock.h" />
+    <ClInclude Include="..\..\include\util\sharedPtr.h" />
+    <ClInclude Include="..\..\include\util\signalHandler.h" />
+    <ClInclude Include="..\..\include\util\singletonHolder.h" />
+    <ClInclude Include="..\..\include\util\streamUtil.h" />
+    <ClInclude Include="..\..\include\util\string.h" />
+    <ClInclude Include="..\..\include\util\thread.h" />
+    <ClInclude Include="..\..\include\util\threadLocal.h" />
+    <ClInclude Include="..\..\include\util\thread_WIN32.h" />
+    <ClInclude Include="..\..\include\util\timespan.h" />
+    <ClInclude Include="..\..\include\util\timestamp.h" />
     <ClInclude Include="..\..\include\util\types.h" />
     <ClInclude Include="..\..\include\util\unWindows.h" />
     <ClInclude Include="..\..\include\util\util.h" />
+    <ClInclude Include="bignum-dtoa.h" />
+    <ClInclude Include="bignum.h" />
+    <ClInclude Include="cached-powers.h" />
+    <ClInclude Include="diy-fp.h" />
+    <ClInclude Include="double-conversion.h" />
+    <ClInclude Include="fast-dtoa.h" />
+    <ClInclude Include="fixed-dtoa.h" />
+    <ClInclude Include="strtod.h" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

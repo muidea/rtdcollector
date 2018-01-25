@@ -11,7 +11,11 @@ class RtdCollectorSink
 public:
   virtual ~RtdCollectorSink(){};
 
-  virtual void onReload();
+  virtual void onSubscribe(RtdTagDeque const& tags) = 0;
+
+  virtual void OnUnsubscribe(RtdTagDeque const& tags) = 0;
+
+  virtual void onReload() = 0;
 };
 
 class RtdCollector_API RtdCollector
@@ -20,19 +24,19 @@ public:
   RtdCollector(){};
   virtual ~RtdCollector(){};
 
-  void initialize(RtdCollectorSink *pSink);
+  virtual void initialize(RtdCollectorSink *pSink) = 0;
 
-  void uninitialize();
+  virtual void uninitialize() = 0;
 
-  bool start();
+  virtual bool start() = 0;
 
-  void stop();
+  virtual void stop() = 0;
 
-  void pushConfigInfo(ConfigInfo const &cfgInfo);
+  virtual void pushConfigInfo(ConfigInfo const &cfgInfo) = 0;
 
-  void pushRtdData(RtdDataVector const &rtdData);
+  virtual void pushRtdData(RtdDataDeque const &rtdData) = 0;
 
-  void pushRtdEvent(RtdEventVector const &rtdEvent);
+  virtual void pushRtdEvent(RtdEventDeque const &rtdEvent) = 0;
 };
 }
 

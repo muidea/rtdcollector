@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 	val.vt = Rtd::ValueType_I4;
 	val.i4Val = 128;
 	Rtd::RtdDataDeque dataDeque;
-	Rtd::RtdData d1(1,0, val);
+	Rtd::RtdData d1(1,123456789,0, val);
 	dataDeque.push_back(d1);
 
 	std::string value;

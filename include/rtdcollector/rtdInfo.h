@@ -48,9 +48,10 @@ namespace Rtd
 		Util::UInt64 quality;
 		Value value;
 
-		RtdData(Util::UInt64 ownerID, Util::UInt64 timeStamp, Value value)
+		RtdData(Util::UInt64 ownerID, Util::UInt64 timeStamp, Util::UInt64 quality, Value value)
 			: ownerID(ownerID)
 			, timeStamp(timeStamp)
+			, quality(quality)
 			, value(value)
 		{
 		}

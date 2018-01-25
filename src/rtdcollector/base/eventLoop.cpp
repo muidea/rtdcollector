@@ -4,10 +4,10 @@
 #include <iostream>
 
 namespace Rtd {
-	const int WaitEventTimeOutValue = 5000;
+	const int WaitEventTimeOutValue = 1000*10;
 
 	EventLoop::EventLoop()
-		: m_eventSignal(false)
+		: m_eventSignal(true)
 		, m_eventloopStatus(INVALID_STATUS)
 	{
 	}

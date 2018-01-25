@@ -1,16 +1,6 @@
 //
-// FPEnvironment_WIN32.cpp
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Core
-// Module:  FPEnvironment
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #include "util/fPEnvironment_WIN32.h"
 

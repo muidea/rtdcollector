@@ -1,18 +1,6 @@
 //
-// Timespan.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: DateTime
-// Module:  Timespan
-//
-// Definition of the Timespan class.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __TIMESPAN_H_1454__
 #define __TIMESPAN_H_1454__

@@ -1,18 +1,6 @@
 //
-// Buffer.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Core
-// Module:  Buffer
-//
-// Definition of the Buffer class.
-//
-// Copyright (c) 2012, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __BUFFER_H_1523__
 #define __BUFFER_H_1523__

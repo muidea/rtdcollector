@@ -1,18 +1,6 @@
 //
-// String.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Core
-// Module:  String
-//
-// String utility functions.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __STRING_H_1604__
 #define __STRING_H_1604__

@@ -1,18 +1,6 @@
 //
-// SingletonHolder.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Core
-// Module:  SingletonHolder
-//
-// Definition of the SingletonHolder template.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __SINGLETONHOLDER_H_1448__
 #define __SINGLETONHOLDER_H_1448__

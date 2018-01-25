@@ -1,18 +1,6 @@
 //
-// NumberFormatter.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Core
-// Module:  NumberFormatter
-//
-// Definition of the NumberFormatter class.
-//
-// Copyright (c) 2004-2008, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __NUMBERFORMATTER_H_1510__
 #define __NUMBERFORMATTER_H_1510__

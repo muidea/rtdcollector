@@ -1,18 +1,6 @@
 //
-// Mutex.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Threading
-// Module:  Mutex
-//
-// Definition of the Mutex and FastMutex classes.
-//
-// Copyright (c) 2004-2008, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __MUTEX_H_1401__
 #define __MUTEX_H_1401__

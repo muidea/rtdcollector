@@ -1,16 +1,5 @@
 //
-// Thread_WIN32.h
-//
-// Library: Foundation
-// Package: Threading
-// Module:  Thread
-//
-// Definition of the ThreadImpl class for WIN32.
-//
-// Copyright (c) 2004-2009, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
+// port from poco-1.8.1
 //
 
 

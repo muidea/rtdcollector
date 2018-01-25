@@ -1,16 +1,5 @@
 //
-// Event.h
-//
-// Library: Foundation
-// Package: Threading
-// Module:  Event
-//
-// Definition of the Event class.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
+// port from poco-1.8.1
 //
 
 

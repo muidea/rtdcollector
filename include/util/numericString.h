@@ -1,16 +1,5 @@
 //
-// NumericString.h
-//
-// Library: Foundation
-// Package: Core
-// Module:  NumericString
-//
-// Numeric string utility functions.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
+// port from poco-1.8.1
 //
 
 

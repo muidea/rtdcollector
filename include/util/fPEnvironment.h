@@ -1,16 +1,5 @@
 //
-// FPEnvironment.h
-//
-// Library: Foundation
-// Package: Core
-// Module:  FPEnvironment
-//
-// Definitions of class FPEnvironment.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
+// port from poco-1.8.1
 //
 
 

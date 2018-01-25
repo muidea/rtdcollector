@@ -1,16 +1,5 @@
 //
-// Event_WIN32.h
-//
-// Library: Foundation
-// Package: Threading
-// Module:  Event
-//
-// Definition of the EventImpl class for WIN32.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
+// port from poco-1.8.1
 //
 
 

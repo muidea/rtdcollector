@@ -1,18 +1,6 @@
 //
-// Thread_POSIX.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Threading
-// Module:  Thread
-//
-// Definition of the ThreadImpl class for POSIX Threads.
-//
-// Copyright (c) 2004-2007, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __THREAD_POSIX_H_1343__
 #define __THREAD_POSIX_H_1343__

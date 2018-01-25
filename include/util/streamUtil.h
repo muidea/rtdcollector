@@ -1,18 +1,6 @@
 //
-// StreamUtil.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Streams
-// Module:  StreamUtil
-//
-// Stream implementation support.
-//
-// Copyright (c) 2005-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __STREAMUTIL_H_1504__
 #define __STREAMUTIL_H_1504__

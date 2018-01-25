@@ -1,16 +1,5 @@
 //
-// Ascii.h
-//
-// Library: Foundation
-// Package: Core
-// Module:  Ascii
-//
-// Definition of the Ascii class.
-//
-// Copyright (c) 2010, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
+// port from poco-1.8.1
 //
 
 

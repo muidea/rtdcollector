@@ -1,17 +1,7 @@
 //
-// Mutex_POSIX.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Threading
-// Module:  Mutex
-//
-// Definition of the MutexImpl and FastMutexImpl classes for POSIX Threads.
-//
-// Copyright (c) 2004-2008, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+
 
 
 #ifndef Foundation_Mutex_POSIX_INCLUDED

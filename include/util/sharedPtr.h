@@ -1,18 +1,6 @@
 //
-// SharedPtr.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Core
-// Module:  SharedPtr
-//
-// Definition of the SharedPtr template class.
-//
-// Copyright (c) 2005-2008, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __SHAREPTR_H_1409__
 #define __SHAREPTR_H_1409__

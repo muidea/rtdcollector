@@ -1,17 +1,7 @@
 //
-// ErrorHandler.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Threading
-// Module:  ErrorHandler
-//
-// Definition of the ErrorHandler class.
-//
-// Copyright (c) 2005-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+
 
 
 #ifndef __ERRORHANDLER_H_1509__

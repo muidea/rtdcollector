@@ -1,14 +1,5 @@
 //
-// Mutex.cpp
-//
-// Library: Foundation
-// Package: Threading
-// Module:  Mutex
-//
-// Copyright (c) 2004-2008, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
+// port from poco-1.8.1
 //
 
 

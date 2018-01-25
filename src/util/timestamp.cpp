@@ -1,15 +1,7 @@
 //
-// Timestamp.cpp
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: DateTime
-// Module:  Timestamp
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
+
 
 
 #include "util/timestamp.h"

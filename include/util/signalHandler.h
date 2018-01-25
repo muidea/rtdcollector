@@ -1,18 +1,6 @@
 //
-// SignalHandler.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Threading
-// Module:  SignalHandler
-//
-// Definition of the SignalHandler class.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __SIGNALHANDLER_H_1411__
 #define __SIGNALHANDLER_H_1411__

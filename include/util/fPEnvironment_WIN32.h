@@ -1,18 +1,6 @@
 //
-// FPEnvironment_WIN32.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Core
-// Module:  FPEnvironment
-//
-// Definitions of class FPEnvironmentImpl for WIN32.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __FPENVIRONMENT_WIN32_H_1530__
 #define __FPENVIRONMENT_WIN32_H_1530__

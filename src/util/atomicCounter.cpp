@@ -1,14 +1,5 @@
 //
-// AtomicCounter.cpp
-//
-// Library: Foundation
-// Package: Core
-// Module:  AtomicCounter
-//
-// Copyright (c) 2009, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
+// port from poco-1.8.1
 //
 
 

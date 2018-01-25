@@ -1,16 +1,5 @@
 //
-// ScopedUnlock.h
-//
-// Library: Foundation
-// Package: Threading
-// Module:  Mutex
-//
-// Definition of the ScopedUnlock template class.
-//
-// Copyright (c) 2007, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
+// port from poco-1.8.1
 //
 
 

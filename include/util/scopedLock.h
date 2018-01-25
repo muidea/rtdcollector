@@ -1,18 +1,6 @@
 //
-// ScopedLock.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Threading
-// Module:  Mutex
-//
-// Definition of the ScopedLock template class.
-//
-// Copyright (c) 2004-2006, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __SCOPELOCK_H_1405__
 #define __SCOPELOCK_H_1405__

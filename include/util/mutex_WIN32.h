@@ -1,18 +1,6 @@
 //
-// Mutex_WIN32.h
+// port from poco-1.8.1
 //
-// Library: Foundation
-// Package: Threading
-// Module:  Mutex
-//
-// Definition of the MutexImpl and FastMutexImpl classes for WIN32.
-//
-// Copyright (c) 2004-2008, Applied Informatics Software Engineering GmbH.
-// and Contributors.
-//
-// SPDX-License-Identifier:	BSL-1.0
-//
-
 
 #ifndef __MUTEXWIN32_H_1455__
 #define __MUTEXWIN32_H_1455__

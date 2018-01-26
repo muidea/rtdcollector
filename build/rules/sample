@@ -1,0 +1,98 @@
+#
+# sample
+#
+# Global build configuration for samples
+#
+# Environment variables:
+# PROJECT_BASE:   Path to POCO source tree. 
+# PROJECT_CONFIG: Build configuration to use.
+#              Defaults to `uname`.
+#
+
+#
+# Check for PROJECT_BASE
+#
+ifndef PROJECT_BASE
+$(error PROJECT_BASE is not defined.)
+endif
+
+#
+# Determine OS
+#
+PROJECT_HOST_OSNAME = $(shell uname)
+
+#
+# If PROJECT_CONFIG is not set, use the OS name as configuration name
+#
+ifndef PROJECT_CONFIG
+PROJECT_CONFIG = $(PROJECT_HOST_OSNAME)
+endif
+
+#
+# Include System Specific Settings
+#
+include $(PROJECT_BASE)/build/config/$(PROJECT_CONFIG)
+
+#
+# Define standard directories
+#
+SRCDIR   = src
+INCDIR   = include
+LIBDIR   = lib
+BINDIR   = bin
+OBJDIR   = obj
+DEPDIR   = .dep
+INCPATH  = $(PROJECT_BASE)/$(INCDIR)
+LIBPATH  = $(PROJECT_BASE)/$(LIBDIR)
+BINPATH  = $(BINDIR)
+OBJPATH  = $(OBJDIR)
+DEPPATH  = $(DEPDIR)
+
+#
+# Determine link mode
+#
+ifndef LINKMODE
+LINKMODE = BOTH
+endif
+
+ifeq ($(LINKMODE),SHARED)
+DEFAULT_TARGET = all_shared
+endif
+ifeq ($(LINKMODE),STATIC)
+DEFAULT_TARGET = all_static
+endif
+ifeq ($(LINKMODE),BOTH)
+DEFAULT_TARGET = all_static all_shared
+endif
+
+#
+# Compose compiler flags
+#
+COMMONFLAGS = $(PROJECT_FLAGS)
+CFLAGS     += $(COMMONFLAGS) $(SYSFLAGS)
+CXXFLAGS   += $(COMMONFLAGS) $(SYSFLAGS)
+LINKFLAGS  += $(COMMONFLAGS) $(SYSFLAGS)
+
+#
+# Compose object file path
+#
+OBJPATH_RELEASE_STATIC = $(OBJPATH)/release_static$(OSARCH_POSTFIX)
+OBJPATH_DEBUG_STATIC   = $(OBJPATH)/debug_static$(OSARCH_POSTFIX)
+OBJPATH_RELEASE_SHARED = $(OBJPATH)/release_shared$(OSARCH_POSTFIX)
+OBJPATH_DEBUG_SHARED   = $(OBJPATH)/debug_shared$(OSARCH_POSTFIX)
+
+#
+# Build Include directory List
+#
+INCLUDE = -Iinclude -I$(INCPATH)
+
+#
+# Build Library Directory List
+#
+LIBRARY = -L$(LIBPATH)
+
+#
+# Make CC and CXX environment vars
+#
+export CC
+export CXX

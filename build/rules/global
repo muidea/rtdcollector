@@ -26,21 +26,21 @@ endif
 sinclude $(PROJECT_BASE)/config.build
 
 #
-# Check for PROJECT_BASE
+# Check for CURRENT_PROJECT_BASE
 #
-ifndef PROJECT_BASE
-PROJECT_BASE = $(PROJECT_BASE)
+ifndef CURRENT_PROJECT_BASE
+CURRENT_PROJECT_BASE = $(PROJECT_BASE)
 endif
-export PROJECT_BASE
+export CURRENT_PROJECT_BASE
 ifdef PROJECT_VERBOSE
-$(info PROJECT_BASE        = $(PROJECT_BASE))
+$(info CURRENT_PROJECT_BASE        = $(CURRENT_PROJECT_BASE))
 endif
 
 #
 # Check for PROJECT_BUILD
 #
 ifndef PROJECT_BUILD
-PROJECT_BUILD = $(PROJECT_BASE)
+PROJECT_BUILD = $(CURRENT_PROJECT_BASE)
 endif
 export PROJECT_BUILD
 ifdef PROJECT_VERBOSE
@@ -51,19 +51,19 @@ endif
 # PROJECT_BASE/PROJECT_BUILD/cwd sanity checks
 #
 # Ensure that the current working directory is either
-# under $PROJECT_BASE or under $PROJECT_BASE
+# under $PROJECT_BASE or under $CURRENT_PROJECT_BASE
 # Also, if we're building under $PROJECT_BASE, disarm
-# $PROJECT_BASE
+# $CURRENT_PROJECT_BASE
 #
 cwd = $(shell pwd)
 inpoco = $(shell echo | awk '{print index("$(cwd)","$(PROJECT_BASE)")}')
-inproj = $(shell echo | awk '{print index("$(cwd)","$(PROJECT_BASE)")}')
+inproj = $(shell echo | awk '{print index("$(cwd)","$(CURRENT_PROJECT_BASE)")}')
 ifneq ($(inpoco),0)
-PROJECT_BASE = $(PROJECT_BASE)
+CURRENT_PROJECT_BASE = $(PROJECT_BASE)
 else
 ifneq ($(inproj),0)
 else
-$(error Current working directory not under $$PROJECT_BASE)
+$(error Current working directory not under $$CURRENT_PROJECT_BASE)
 endif
 endif
 
@@ -190,7 +190,7 @@ STATICLIBLINKEXT = .a
 #
 # Find out current component
 #
-COMPONENT := $(shell $(PROJECT_BASE)/build/script/projname "$(PROJECT_BASE)")
+COMPONENT := $(shell $(PROJECT_BASE)/build/script/projname "$(CURRENT_PROJECT_BASE)")
 
 #
 # Define standard directories
@@ -223,7 +223,7 @@ ifdef PROJECT_VERBOSE
 $(info PROJECT_LIB_INSTALLDIR = $(PROJECT_LIB_INSTALLDIR))
 endif
 
-ifeq ($(PROJECT_BASE),$(PROJECT_BASE))
+ifeq ($(PROJECT_BASE),$(CURRENT_PROJECT_BASE))
 PROJECT_LIBRARY =
 else
 PROJECT_LIBRARY = -L$(PROJECT_BASE)/$(LIBDIR)

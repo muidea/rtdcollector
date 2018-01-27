@@ -2,16 +2,16 @@
 #
 # projname
 #
-# Usage: projname PROJECT_BASE
+# Usage: projname CURRENT_PROJECT_BASE
 #
 # Extract the project name from the current path
-# NOTE: the cd $PROJECT_BASE is necessary to resolve symbolic links,
+# NOTE: the cd $CURRENT_PROJECT_BASE is necessary to resolve symbolic links,
 #       ditto is the kinda strange sh -c pwd
 #
 
-PROJECT_BASE=$1
+CURRENT_PROJECT_BASE=$1
 cdir=`sh -c pwd`
-cd $PROJECT_BASE
+cd $CURRENT_PROJECT_BASE
 projbase=`sh -c pwd`
 cd "$cdir"
 sh -c pwd | sed "s:^$projbase::" | sed "s:^/::"

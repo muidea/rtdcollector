@@ -97,10 +97,10 @@ endif
 	find $(PROJECT_BUILD)/lib/$(OSNAME)/$(OSARCH) -name "lib*" -type f -exec cp -f  {} $(INSTALLDIR)/lib \;
 	find $(PROJECT_BUILD)/lib/$(OSNAME)/$(OSARCH) -name "lib*" -type l -exec cp -Rf {} $(INSTALLDIR)/lib \;
 
-libexecs =  tinyxml2-libexec
+libexecs =  tinyxml2-libexec util-libexec
 tests    =  
 samples  =  
-cleans   =  tinyxml2-clean
+cleans   =  tinyxml2-clean util-clean
 
 .PHONY: $(libexecs)
 .PHONY: $(tests)
@@ -117,6 +117,12 @@ tinyxml2-libexec:
 
 tinyxml2-clean:
 	$(MAKE) -C $(PROJECT_BASE)/src/tinyxml2 clean
+
+util-libexec: 
+	$(MAKE) -C $(PROJECT_BASE)/src/util
+
+util-clean:
+	$(MAKE) -C $(PROJECT_BASE)/src/util clean
 
 clean: cleans
 

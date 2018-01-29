@@ -13,9 +13,7 @@
 
 
 #include "util/NamedEvent_WIN32.h"
-#include "util/error.h"
 #include "util/exception.h"
-#include "util/format.h"
 
 
 namespace Util {
@@ -28,7 +26,7 @@ NamedEventImpl::NamedEventImpl(const std::string& name):
 	if (!_event)
 	{
 		DWORD dwRetVal = GetLastError();
-		throw SystemException(format("cannot create named event %s [Error %d: %s]", _name, (int)dwRetVal, Error::getMessage(dwRetVal)));
+		throw SystemException("cannot create named event", _name, (int)dwRetVal);
 	}
 }
 

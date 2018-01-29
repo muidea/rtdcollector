@@ -22,6 +22,7 @@
 #include <ws2ipdef.h>
 #include <iphlpapi.h>
 
+#pragma comment(lib, "IPHLPAPI.lib")
 
 namespace Util {
 

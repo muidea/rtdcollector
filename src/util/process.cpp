@@ -39,9 +39,9 @@ namespace
 
 
 #if defined(PLATFORM_OS_FAMILY_WINDOWS)
-#include "Process_WIN32.cpp"
+#include "process_WIN32.cpp"
 #elif defined(PLATFORM_OS_FAMILY_UNIX)
-#include "Process_POSIX.cpp"
+#include "process_POSIX.cpp"
 #endif
 
 

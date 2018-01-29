@@ -394,7 +394,7 @@ S translateInPlace(S& str, const typename S::value_type* from, const typename S:
 }
 
 
-#if !defined(POCO_NO_TEMPLATE_ICOMPARE)
+#if !defined(PLATFORM_NO_TEMPLATE_ICOMPARE)
 
 
 template <class S>

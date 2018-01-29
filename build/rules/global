@@ -4,7 +4,7 @@
 # Global build configuration
 #
 # Environment variables:
-# PROJECT_BASE:   Path to POCO source tree. Must be defined.
+# PROJECT_BASE:   Path to Project source tree. Must be defined.
 # PROJECT_BUILD:  Path to directory where build files are put.
 #              Defaults to $(PROJECT_BASE)
 # PROJECT_CONFIG: Build configuration to use.

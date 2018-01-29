@@ -72,7 +72,7 @@ RELEASEOPT_LINK =
 SYSFLAGS = -D_XOPEN_SOURCE=500
 
 # give visibility of old BSD typedef like u_short, u_int, u_long...
-# used in some networking system includes, needed when using PocoNet
+# used in some networking system includes
 SYSFLAGS += -D__BSD_VISIBLE
 
 

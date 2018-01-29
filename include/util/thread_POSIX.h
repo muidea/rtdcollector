@@ -17,7 +17,7 @@
 #include <pthread.h>
 // must be limits.h (not <climits>) for PTHREAD_STACK_MIN on Solaris
 #include <limits.h>
-#if !defined(POCO_NO_SYS_SELECT_H)
+#if !defined(PLATFORM_NO_SYS_SELECT_H)
 #include <sys/select.h>
 #endif
 #include <errno.h>
@@ -110,11 +110,6 @@ private:
 			started(false),
 			joined(false)
 		{
-		#if defined(POCO_VXWORKS)
-			// This workaround is for VxWorks 5.x where
-			// pthread_init() won't properly initialize the thread.
-			std::memset(&thread, 0, sizeof(thread));
-		#endif
 		}
 
 		SharedPtr<Runnable> pRunnableTarget;

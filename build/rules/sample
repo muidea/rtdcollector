@@ -4,7 +4,7 @@
 # Global build configuration for samples
 #
 # Environment variables:
-# PROJECT_BASE:   Path to POCO source tree. 
+# PROJECT_BASE:   Path to Project source tree. 
 # PROJECT_CONFIG: Build configuration to use.
 #              Defaults to `uname`.
 #

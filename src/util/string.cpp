@@ -83,7 +83,7 @@ int icompare(const std::string& str1, std::string::size_type pos1, std::string::
 
 int icompare(const std::string& str, std::string::size_type pos, std::string::size_type n, const std::string::value_type* ptr)
 {
-	poco_check_ptr (ptr);
+	util_check_ptr (ptr);
 	std::string::size_type sz = str.size();
 	if (pos > sz) pos = sz;
 	if (pos + n > sz) n = sz - pos;
@@ -153,7 +153,7 @@ std::string remove(const std::string& str, const std::string::value_type ch, std
 	
 std::string& replaceInPlace(std::string& str, const std::string& from, const std::string& to, std::string::size_type start)
 {
-	poco_assert (from.size() > 0);
+	util_assert (from.size() > 0);
 	
 	std::string result;
 	std::string::size_type pos = 0;
@@ -177,7 +177,7 @@ std::string& replaceInPlace(std::string& str, const std::string& from, const std
 
 std::string& replaceInPlace(std::string& str, const std::string::value_type* from, const std::string::value_type* to, std::string::size_type start)
 {
-	poco_assert (*from);
+	util_assert (*from);
 
 	std::string result;
 	std::string::size_type pos = 0;

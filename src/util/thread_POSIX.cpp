@@ -46,9 +46,6 @@ namespace
 namespace {
 void setThreadName(pthread_t thread, const std::string& threadName)
 {
-#if (POCO_OS == POCO_OS_MAC_OS_X)
-	pthread_setname_np(threadName.c_str()); // __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_2)
-#else
 	if (pthread_setname_np(thread, threadName.c_str()) == ERANGE && threadName.size() > 15)
 	{
 		std::string truncName(threadName, 0, 7);
@@ -56,7 +53,6 @@ void setThreadName(pthread_t thread, const std::string& threadName)
 		truncName.append(threadName, threadName.size() - 7, 7);
 		pthread_setname_np(thread, truncName.c_str());
 	}
-#endif
 }
 }
 

@@ -340,7 +340,7 @@ void ProcessImpl::requestTerminationImpl(PIDImpl pid)
 
 std::string ProcessImpl::terminationEventName(PIDImpl pid)
 {
-	std::string evName("POCOTRM");
+	std::string evName("UtilTRM");
 	NumberFormatter::appendHex(evName, pid, 8);
 	return evName;
 }

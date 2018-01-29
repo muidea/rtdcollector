@@ -191,7 +191,7 @@ STATICLIBLINKEXT = .a
 # Find out current component
 #
 COMPONENT := $(shell $(PROJECT_BASE)/build/script/projname "$(CURRENT_PROJECT_BASE)")
-
+ 
 #
 # Define standard directories
 #
@@ -201,10 +201,10 @@ LIBDIR   = lib/$(OSNAME)/$(OSARCH)
 BINDIR   = bin/$(OSNAME)/$(OSARCH)
 OBJDIR   = obj/$(OSNAME)/$(OSARCH)
 DEPDIR   = .dep/$(OSNAME)/$(OSARCH)
-LIBPATH  = $(PROJECT_BUILD)/$(LIBDIR)
-BINPATH  = $(PROJECT_BUILD)/$(COMPONENT)/$(BINDIR)
-OBJPATH  = $(PROJECT_BUILD)/$(COMPONENT)/$(OBJDIR)
-DEPPATH  = $(PROJECT_BUILD)/$(COMPONENT)/$(DEPDIR)
+OBJPATH  = $(PROJECT_BASE)/$(OBJDIR)/$(COMPONENT)
+LIBPATH  = $(PROJECT_BASE)/$(LIBDIR)
+BINPATH  = $(PROJECT_BASE)/$(COMPONENT)/$(BINDIR)
+DEPPATH  = $(PROJECT_BASE)/$(COMPONENT)/$(DEPDIR)
 
 PROJECT_HOST_BINDIR    = bin/$(PROJECT_HOST_OSNAME)/$(PROJECT_HOST_OSARCH)
 PROJECT_TARGET_BINDIR  = $(BINDIR)
@@ -304,7 +304,8 @@ OBJPATH_DEBUG_SHARED   = $(OBJPATH)/debug_shared$(OSARCH_POSTFIX)
 #
 # Build Include directory List
 #
-INCLUDE = -Iinclude $(foreach p,$(COMPONENTS),-I$(PROJECT_BASE)/$(p)/$(INCDIR)) $(foreach p,$(PROJECT_ADD_INCLUDE),-I$(p))
+#INCLUDE = -Iinclude $(foreach p,$(COMPONENTS),-I$(PROJECT_BASE)/$(p)/$(INCDIR)) $(foreach p,$(PROJECT_ADD_INCLUDE),-I$(p))
+INCLUDE = -I./ -Iinclude -I$(PROJECT_BASE)/$(INCDIR) $(foreach p,$(PROJECT_ADD_INCLUDE),-I$(p))
 
 #
 # Build Library Directory List

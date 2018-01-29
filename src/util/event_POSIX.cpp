@@ -4,11 +4,9 @@
 
 
 #include "util/event_POSIX.h"
-#else
 #include <time.h>
 #include <sys/time.h>
-#endif
-
+ 
 
 //
 // Note: pthread_cond_timedwait() with CLOCK_MONOTONIC is supported

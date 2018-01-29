@@ -7,7 +7,7 @@
 #define __MEMORY_STREAM_H_1502__
 
 
-#include "bugcheck.h"
+#include "bugCheck.h"
 #include "util.h"
 #include "streamUtil.h"
 #include <streambuf>

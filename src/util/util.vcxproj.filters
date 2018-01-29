@@ -182,7 +182,7 @@
     <ClInclude Include="..\..\include\util\fPEnvironment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\util\fPEnvironment_C99.h">
+    <ClInclude Include="..\..\include\util\fPEnvironment_POSIX.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\util\fPEnvironment_WIN32.h">

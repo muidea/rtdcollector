@@ -169,7 +169,7 @@
     <ClInclude Include="..\..\include\util\event_WIN32.h" />
     <ClInclude Include="..\..\include\util\exception.h" />
     <ClInclude Include="..\..\include\util\fPEnvironment.h" />
-    <ClInclude Include="..\..\include\util\fPEnvironment_C99.h" />
+    <ClInclude Include="..\..\include\util\fPEnvironment_POSIX.h" />
     <ClInclude Include="..\..\include\util\fPEnvironment_WIN32.h" />
     <ClInclude Include="..\..\include\util\memoryStream.h" />
     <ClInclude Include="..\..\include\util\mutex.h" />

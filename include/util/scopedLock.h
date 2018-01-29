@@ -81,7 +81,7 @@ public:
 		}
 		catch (...)
 		{
-			poco_unexpected();
+			util_unexpected();
 		}
 	}
 	

@@ -111,7 +111,7 @@ public:
 		/// resized. If resize is attempted on those, IllegalAccessException
 		/// is thrown.
 	{
-		if (!_ownMem) throw Poco::InvalidAccessException("Cannot resize buffer which does not own its storage.");
+		if (!_ownMem) throw Util::InvalidAccessException("Cannot resize buffer which does not own its storage.");
 
 		if (newCapacity > _capacity)
 		{
@@ -140,7 +140,7 @@ public:
 		/// resized. If resize is attempted on those, IllegalAccessException
 		/// is thrown.
 	{
-		if (!_ownMem) throw Poco::InvalidAccessException("Cannot resize buffer which does not own its storage.");
+		if (!_ownMem) throw Util::InvalidAccessException("Cannot resize buffer which does not own its storage.");
 
 		if (newCapacity != _capacity)
 		{
@@ -289,14 +289,14 @@ public:
 
 	T& operator [] (std::size_t index)
 	{
-		poco_assert (index < _used);
+		util_assert (index < _used);
 		
 		return _ptr[index];
 	}
 
 	const T& operator [] (std::size_t index) const
 	{
-		poco_assert (index < _used);
+		util_assert (index < _used);
 		
 		return _ptr[index];
 	}

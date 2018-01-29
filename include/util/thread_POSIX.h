@@ -2,17 +2,18 @@
 // port from poco-1.8.1
 //
 
-#ifndef __THREAD_POSIX_H_1343__
-#define __THREAD_POSIX_H_1343__
+
+#ifndef __THREAD_POSIX_H_0945__
+#define __THREAD_POSIX_H_0945__
 
 
-#include "util.h"
-#include "runnable.h"
-#include "signalHandler.h"
-#include "event.h"
-#include "refCountedObject.h"
-#include "autoPtr.h"
-#include "sharedPtr.h"
+#include "util/util.h"
+#include "util/runnable.h"
+#include "util/signalHandler.h"
+#include "util/event.h"
+#include "util/refCountedObject.h"
+#include "util/autoPtr.h"
+#include "util/sharedPtr.h"
 #include <pthread.h>
 // must be limits.h (not <climits>) for PTHREAD_STACK_MIN on Solaris
 #include <limits.h>
@@ -20,7 +21,6 @@
 #include <sys/select.h>
 #endif
 #include <errno.h>
-#endif
 
 
 namespace Util {
@@ -106,10 +106,15 @@ private:
 			osPrio(),
 			policy(SCHED_OTHER),
 			done(false),
-			stackSize(POCO_THREAD_STACK_SIZE),
+			stackSize(PLATFORM_THREAD_STACK_SIZE),
 			started(false),
 			joined(false)
 		{
+		#if defined(POCO_VXWORKS)
+			// This workaround is for VxWorks 5.x where
+			// pthread_init() won't properly initialize the thread.
+			std::memset(&thread, 0, sizeof(thread));
+		#endif
 		}
 
 		SharedPtr<Runnable> pRunnableTarget;
@@ -127,10 +132,8 @@ private:
 
 	static CurrentThreadHolder _currentThreadHolder;
 	
-#if defined(PLATFORM_OS_FAMILY_UNIX)
 	SignalHandler::JumpBufferVec _jumpBufferVec;
 	friend class SignalHandler;
-#endif
 };
 
 
@@ -176,4 +179,4 @@ inline ThreadImpl::TIDImpl ThreadImpl::tidImpl() const
 } // namespace Util
 
 
-#endif // __THREAD_POSIX_H_1343__
+#endif // __THREAD_POSIX_H_0945__

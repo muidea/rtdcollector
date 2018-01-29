@@ -136,13 +136,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="base\event.cpp" />
-    <ClCompile Include="base\eventLoop.cpp" />
+    <ClCompile Include="event.cpp" />
+    <ClCompile Include="eventLoop.cpp" />
     <ClCompile Include="rtdCollector.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="base\event.h" />
-    <ClInclude Include="base\eventLoop.h" />
+    <ClInclude Include="event.h" />
+    <ClInclude Include="eventLoop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

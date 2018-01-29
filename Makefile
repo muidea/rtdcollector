@@ -75,10 +75,10 @@ endif
 all: libexecs tests samples
 
 INSTALLDIR = $(DESTDIR)$(PROJECT_PREFIX)
-COMPONENTS = tinyxml2
+COMPONENTS = tinyxml2 util rtdcollector
 
 install: libexecs
-	mkdir -p $(INSTALLDIR)/include/Poco
+	mkdir -p $(INSTALLDIR)/include/rtdcollector
 	mkdir -p $(INSTALLDIR)/lib
 	mkdir -p $(INSTALLDIR)/bin
 	for comp in $(filter-out $(foreach f,$(OMIT),$f%),$(COMPONENTS)) ; do \
@@ -97,10 +97,10 @@ endif
 	find $(PROJECT_BUILD)/lib/$(OSNAME)/$(OSARCH) -name "lib*" -type f -exec cp -f  {} $(INSTALLDIR)/lib \;
 	find $(PROJECT_BUILD)/lib/$(OSNAME)/$(OSARCH) -name "lib*" -type l -exec cp -Rf {} $(INSTALLDIR)/lib \;
 
-libexecs =  tinyxml2-libexec util-libexec
+libexecs = rtdTest-libexec rtdcollector-libexec tinyxml2-libexec util-libexec
 tests    =  
 samples  =  
-cleans   =  tinyxml2-clean util-clean
+cleans   = rtdTest-clean rtdcollector-clean tinyxml2-clean util-clean
 
 .PHONY: $(libexecs)
 .PHONY: $(tests)
@@ -111,6 +111,18 @@ libexecs: $(filter-out $(foreach f,$(OMIT),$f%),$(libexecs))
 tests: $(filter-out $(foreach f,$(OMIT),$f%),$(tests))
 samples: $(filter-out $(foreach f,$(OMIT),$f%),$(samples))
 cleans: $(filter-out $(foreach f,$(OMIT),$f%),$(cleans))
+
+rtdTest-libexec: tinyxml2-libexec util-libexec rtdcollector-libexec
+	$(MAKE) -C $(PROJECT_BASE)/test/rtdTest
+
+rtdTest-clean:
+	$(MAKE) -C $(PROJECT_BASE)/test/rtdTest clean
+
+rtdcollector-libexec: tinyxml2-libexec util-libexec
+	$(MAKE) -C $(PROJECT_BASE)/src/rtdcollector
+
+rtdcollector-clean:
+	$(MAKE) -C $(PROJECT_BASE)/src/rtdcollector clean
 
 tinyxml2-libexec: 
 	$(MAKE) -C $(PROJECT_BASE)/src/tinyxml2

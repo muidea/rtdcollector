@@ -97,10 +97,10 @@ endif
 	find $(PROJECT_BUILD)/lib/$(OSNAME)/$(OSARCH) -name "lib*" -type f -exec cp -f  {} $(INSTALLDIR)/lib \;
 	find $(PROJECT_BUILD)/lib/$(OSNAME)/$(OSARCH) -name "lib*" -type l -exec cp -Rf {} $(INSTALLDIR)/lib \;
 
-libexecs = rtdTest-libexec rtdcollector-libexec tinyxml2-libexec util-libexec
+libexecs = dbusSend-libexec dbusRecv-libexec rtdTest-libexec rtdcollector-libexec tinyxml2-libexec util-libexec
 tests    =  
 samples  =  
-cleans   = rtdTest-clean rtdcollector-clean tinyxml2-clean util-clean
+cleans   = dbusSend-clean dbusRecv-clean rtdTest-clean rtdcollector-clean tinyxml2-clean util-clean
 
 .PHONY: $(libexecs)
 .PHONY: $(tests)
@@ -135,6 +135,18 @@ util-libexec:
 
 util-clean:
 	$(MAKE) -C $(PROJECT_BASE)/src/util clean
+
+dbusSend-libexec: 
+	$(MAKE) -C $(PROJECT_BASE)/test/dbusSend
+
+dbusSend-clean:
+	$(MAKE) -C $(PROJECT_BASE)/test/dbusSend clean
+
+dbusRecv-libexec: 
+	$(MAKE) -C $(PROJECT_BASE)/test/dbusRecv
+
+dbusRecv-clean:
+	$(MAKE) -C $(PROJECT_BASE)/test/dbusRecv clean
 
 clean: cleans
 

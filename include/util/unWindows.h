@@ -76,7 +76,6 @@
 #undef CreateSemaphore
 #undef OpenSemaphore
 #undef LoadLibrary
-#undef GetModuleFileName
 #undef CreateProcess
 #undef GetCommandLine
 #undef GetEnvironmentVariable

@@ -23,7 +23,7 @@ namespace DBusWrapper
 		bool isAvailable() const;
 
 	protected:
-		std::string m_scopeToken;
+		std::string m_scopeNameSpace;
 
 		DBusError m_err;
 		DBusConnection* m_connection;

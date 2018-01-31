@@ -97,10 +97,10 @@ endif
 	find $(PROJECT_BUILD)/lib/$(OSNAME)/$(OSARCH) -name "lib*" -type f -exec cp -f  {} $(INSTALLDIR)/lib \;
 	find $(PROJECT_BUILD)/lib/$(OSNAME)/$(OSARCH) -name "lib*" -type l -exec cp -Rf {} $(INSTALLDIR)/lib \;
 
-libexecs = dbusSend-libexec dbusRecv-libexec rtdTest-libexec dbuswrapper-libexec rtdcollector-libexec tinyxml2-libexec util-libexec
+libexecs = dbusWrapperSend-libexec dbusWrapperRecv-libexec dbusSend-libexec dbusRecv-libexec rtdTest-libexec dbuswrapper-libexec rtdcollector-libexec tinyxml2-libexec util-libexec
 tests    =  
 samples  =  
-cleans   = dbusSend-clean dbusRecv-clean rtdTest-clean dbuswrapper-libexec rtdcollector-clean tinyxml2-clean util-clean
+cleans   = dbusWrapperSend-clean dbusWrapperRecv-clean dbusSend-clean dbusRecv-clean rtdTest-clean dbuswrapper-libexec rtdcollector-clean tinyxml2-clean util-clean
 
 .PHONY: $(libexecs)
 .PHONY: $(tests)
@@ -153,6 +153,18 @@ dbusRecv-libexec:
 
 dbusRecv-clean:
 	$(MAKE) -C $(PROJECT_BASE)/test/dbusRecv clean
+
+dbusWrapperSend-libexec: dbuswrapper-libexec
+	$(MAKE) -C $(PROJECT_BASE)/test/dbusWrapperSend
+
+dbusWrapperSend-clean:
+	$(MAKE) -C $(PROJECT_BASE)/test/dbusWrapperSend clean
+
+dbusWrapperRecv-libexec: dbuswrapper-libexec
+	$(MAKE) -C $(PROJECT_BASE)/test/dbusWrapperRecv
+
+dbusWrapperRecv-clean:
+	$(MAKE) -C $(PROJECT_BASE)/test/dbusWrapperRecv clean
 
 clean: cleans
 

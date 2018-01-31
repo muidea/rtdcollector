@@ -3,6 +3,7 @@
 #include "util/runnable.h"
 #include "util/thread.h"
 #include "util/event.h"
+#include <iostream>
 
 namespace DBusWrapper
 {
@@ -44,7 +45,6 @@ namespace DBusWrapper
 		volatile int m_eventloopStatus;
 		Util::Event m_eventSignal;
 
-		std::string m_scopeToken;
 		EndPointCallBack * m_pCallBack;
 	};
 
@@ -53,7 +53,6 @@ namespace DBusWrapper
 		: m_dbusWrapper(nameSpace)
 		, m_pCallBack(pCallBack)
 		, m_eventloopStatus(INVALID_STATUS)
-		, m_eventSignal(false)
 	{
 	}
 
@@ -63,22 +62,24 @@ namespace DBusWrapper
 
 	void EndPointImpl::registerEndPoint(std::string const& endPointName)
 	{
-		m_eventloopStatus = STARTING_STATUS;
-
 		m_dbusWrapper.initialize(endPointName);
 
-		m_thread.start(*this);
+		if (m_pCallBack) {
+			m_eventloopStatus = STARTING_STATUS;
+			m_thread.start(*this);
+		}
 	}
 
 	void EndPointImpl::unregisterEndPoint()
 	{
-		m_eventloopStatus = STOPING_STATUS;
 
 		m_dbusWrapper.uninitialize();
 
-		m_thread.join();
-
-		m_eventloopStatus = INVALID_STATUS;
+		if (m_pCallBack) {
+			m_eventloopStatus = STOPING_STATUS;
+			m_thread.join();
+			m_eventloopStatus = INVALID_STATUS;
+		}
 	}
 
 	void EndPointImpl::sendMessage(Message const& msg)
@@ -92,16 +93,22 @@ namespace DBusWrapper
 		while (isRunning())
 		{
 			if (!m_dbusWrapper.isAvailable()) {
+				std::cout << "dbus isn\'t available" << std::endl;
 				break;
 			}
 
 			std::string msg;
 			m_dbusWrapper.recvMessage(msg);
 			if (msg.size() == 0) {
-				m_eventSignal.wait(WaitEventTimeOutValue);
+				try {
+					m_eventSignal.wait(WaitEventTimeOutValue);
+				} catch (Util::TimeoutException e)
+				{
+				}
 				continue;
 			}
 
+			std::cout << "run recvMessage, msg size:" << msg.size() << std::endl;
 			if (m_pCallBack) {
 				m_pCallBack->onMessage(msg);
 			}

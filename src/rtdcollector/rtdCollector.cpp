@@ -3,6 +3,7 @@
 #include "util/thread.h"
 #include "util/exception.h"
 #include <memory>
+#include <iostream>
 
 namespace Rtd
 {
@@ -117,12 +118,15 @@ void RtdCollectorImpl::pushRtdEvent(RtdEventDeque const &rtdEvent)
 
 void RtdCollectorImpl::pushConfigInfoInternal(ConfigInfo const& cfgInfo)
 {
+	std::cout << "pushConfigInfoInternal" << std::endl;
 }
 void RtdCollectorImpl::pushRtdDataInternal(RtdDataVectorPtr ptr)
 {
+	std::cout << "pushRtdDataInternal" << std::endl;
 }
 void RtdCollectorImpl::pushRtdEventInternal(RtdEventVectorPtr ptr)
 {
+	std::cout << "pushRtdEventInternal" << std::endl;
 }
 }
 

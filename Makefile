@@ -97,10 +97,10 @@ endif
 	find $(PROJECT_BUILD)/lib/$(OSNAME)/$(OSARCH) -name "lib*" -type f -exec cp -f  {} $(INSTALLDIR)/lib \;
 	find $(PROJECT_BUILD)/lib/$(OSNAME)/$(OSARCH) -name "lib*" -type l -exec cp -Rf {} $(INSTALLDIR)/lib \;
 
-libexecs = dbusSend-libexec dbusRecv-libexec rtdTest-libexec rtdcollector-libexec tinyxml2-libexec util-libexec
+libexecs = dbusSend-libexec dbusRecv-libexec rtdTest-libexec dbuswrapper-libexec rtdcollector-libexec tinyxml2-libexec util-libexec
 tests    =  
 samples  =  
-cleans   = dbusSend-clean dbusRecv-clean rtdTest-clean rtdcollector-clean tinyxml2-clean util-clean
+cleans   = dbusSend-clean dbusRecv-clean rtdTest-clean dbuswrapper-libexec rtdcollector-clean tinyxml2-clean util-clean
 
 .PHONY: $(libexecs)
 .PHONY: $(tests)
@@ -117,6 +117,12 @@ rtdTest-libexec: tinyxml2-libexec util-libexec rtdcollector-libexec
 
 rtdTest-clean:
 	$(MAKE) -C $(PROJECT_BASE)/test/rtdTest clean
+
+dbuswrapper-libexec: util-libexec
+	$(MAKE) -C $(PROJECT_BASE)/src/dbuswrapper
+
+dbuswrapper-clean:
+	$(MAKE) -C $(PROJECT_BASE)/src/dbuswrapper clean
 
 rtdcollector-libexec: tinyxml2-libexec util-libexec
 	$(MAKE) -C $(PROJECT_BASE)/src/rtdcollector

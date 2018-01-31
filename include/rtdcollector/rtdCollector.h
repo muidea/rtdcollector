@@ -18,7 +18,7 @@ public:
   virtual void onReload() = 0;
 };
 
-class RtdCollector_API RtdCollector
+class RtdCollector
 {
 public:
   RtdCollector(){};

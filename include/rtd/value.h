@@ -66,6 +66,9 @@ namespace Rtd
 			case ValueType_I4:
 				this->i4Val = right.i4Val;
 				break;
+			case ValueType_I8:
+				this->i8Val = right.i8Val;
+				break;
 			case ValueType_UI1:
 				this->ui1Val = right.ui1Val;
 				break;
@@ -102,6 +105,9 @@ namespace Rtd
 					break;
 				case ValueType_I4:
 					this->i4Val = right.i4Val;
+					break;
+				case ValueType_I8:
+					this->i8Val = right.i8Val;
 					break;
 				case ValueType_UI1:
 					this->ui1Val = right.ui1Val;

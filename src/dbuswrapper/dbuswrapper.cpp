@@ -80,27 +80,34 @@ namespace DBusWrapper
 
 	bool DBusWrapper::recvMessage(std::string& msg)
 	{
+		bool retVal = false;
 		DBusMessage* dbusMsg = dbus_connection_pop_message(m_connection);
 		DBusMessageIter dbusMsgIter;
 		DBusBasicValue value;
 
-		if (dbusMsg) {
-			if (dbus_message_is_signal(dbusMsg, m_scopeNameSpace.c_str(), MessageName.c_str())) {
-				if (!dbus_message_iter_init(dbusMsg, &dbusMsgIter)){
-					std::cout << "MessageHas no Param" << std::endl;
+		do 
+		{
+			if (dbusMsg) {
+				if (dbus_message_is_signal(dbusMsg, m_scopeNameSpace.c_str(), MessageName.c_str())) {
+					if (!dbus_message_iter_init(dbusMsg, &dbusMsgIter)) {
+						break;
+					}
+
+					if (dbus_message_iter_get_arg_type(&dbusMsgIter) != DBUS_TYPE_STRING) {
+						break;
+					}
+
+					dbus_message_iter_get_basic(&dbusMsgIter, &value);
+
+					msg.assign(value.str);
 				}
 
-				if (dbus_message_iter_get_arg_type(&dbusMsgIter) != DBUS_TYPE_STRING) {
-					std::cout << "Param isnot string" << std::endl;
-				}
-
-				dbus_message_iter_get_basic(&dbusMsgIter, &value);
-
-				msg.assign(value.str);
+				dbus_message_unref(dbusMsg);
+				retVal = true;
 			}
+		} while (false);
 
-			dbus_message_unref(dbusMsg);
-		}
+		return retVal;
 	}
 
 	bool DBusWrapper::isAvailable() const

@@ -9,8 +9,8 @@
 //    Author: muidea@gmail.com
 //
 //
-#ifndef __RTDEVENT_H_1517541490__
-#define __RTDEVENT_H_1517541490__
+#ifndef __RTDEVENT_H_1517557968__
+#define __RTDEVENT_H_1517557968__
 #include "muprotocol/muprotocol.h"
 #include "muprotocol/muserialize.h"
 #include <vector>
@@ -85,6 +85,40 @@ protected:
 };
 
 typedef std::vector<RtdEvent> RtdEventVector;
+
+class RtdEventInfo : public IMUProtocol
+{
+public:
+    RtdEventInfo();
+
+    virtual ~RtdEventInfo();
+
+    virtual bool encode(void* pBuffPtr, UINT32 uBuffSize, UINT32& uRemainSize) const;
+
+    virtual bool decode(const void* pDataPtr, UINT32 uDataSize, UINT32& uRemainSize);
+
+    virtual UINT32 calcSize() const;
+
+    inline void setEventVector(RtdEventVector const& value)
+    {
+        _eventVector = value;
+    };
+
+    inline RtdEventVector const& getEventVector() const
+    {
+        return _eventVector;
+    };
+
+    inline RtdEventVector& peerEventVector()
+    {
+        return _eventVector;
+    };
+
+protected:
+    bool operator==(RtdEventInfo const& right);
+
+    RtdEventVector _eventVector;
+};
 
 
 }

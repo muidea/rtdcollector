@@ -236,6 +236,62 @@ UINT32 RtdData::calcSize() const
     return uRet;
 }
 
+RtdDataInfo::RtdDataInfo()
+{
+}
+
+RtdDataInfo::~RtdDataInfo()
+{
+}
+
+bool RtdDataInfo::encode(void* pBuffPtr, UINT32 uBuffSize, UINT32& uRemainSize) const
+{
+    bool bRet = true;
+    UINT32 uPacketSize = calcSize();
+    if (uBuffSize < uPacketSize) {
+        return false;
+    }
+    uRemainSize = uBuffSize;
+    bRet = MUPProtocol::encode(uPacketSize, (char*)pBuffPtr + uBuffSize - uRemainSize, uRemainSize, uRemainSize);
+    if (!bRet) {
+        return bRet;
+    }
+
+    MUPProtocol::encode(_dataVector, (char*)pBuffPtr + uBuffSize - uRemainSize, uRemainSize, uRemainSize);
+    if (!bRet) {
+        return bRet;
+    }
+
+    return bRet;
+}
+
+bool RtdDataInfo::decode(const void* pDataPtr, UINT32 uDataSize, UINT32& uRemainSize)
+{
+    bool bRet = true;
+    UINT32 uPacketSize = 0;
+    uRemainSize = uDataSize;
+    bRet = MUPProtocol::decode((char*)pDataPtr + uDataSize - uRemainSize, uRemainSize, uPacketSize, uRemainSize);
+    if (!bRet || (uPacketSize > uDataSize)) {
+        return bRet;
+    }
+
+    MUPProtocol::decode((char*)pDataPtr + uDataSize - uRemainSize, uRemainSize, _dataVector, uRemainSize);
+    if (!bRet) {
+        return bRet;
+    }
+
+    uRemainSize = uDataSize - uPacketSize;
+    return bRet;
+}
+
+UINT32 RtdDataInfo::calcSize() const
+{
+    UINT32 uRet = sizeof(UINT32);
+    uRet += MUPProtocol::getSize(_dataVector);
+
+    return uRet;
+}
+
 
 }
 

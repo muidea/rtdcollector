@@ -13,15 +13,15 @@
 
 namespace RtdPrococol {
 
-ConfigInfoEvent::ConfigInfoEvent()
+RtdConfigInfo::RtdConfigInfo()
 {
 }
 
-ConfigInfoEvent::~ConfigInfoEvent()
+RtdConfigInfo::~RtdConfigInfo()
 {
 }
 
-bool ConfigInfoEvent::encode(void* pBuffPtr, UINT32 uBuffSize, UINT32& uRemainSize) const
+bool RtdConfigInfo::encode(void* pBuffPtr, UINT32 uBuffSize, UINT32& uRemainSize) const
 {
     bool bRet = true;
     UINT32 uPacketSize = calcSize();
@@ -42,7 +42,7 @@ bool ConfigInfoEvent::encode(void* pBuffPtr, UINT32 uBuffSize, UINT32& uRemainSi
     return bRet;
 }
 
-bool ConfigInfoEvent::decode(const void* pDataPtr, UINT32 uDataSize, UINT32& uRemainSize)
+bool RtdConfigInfo::decode(const void* pDataPtr, UINT32 uDataSize, UINT32& uRemainSize)
 {
     bool bRet = true;
     UINT32 uPacketSize = 0;
@@ -61,7 +61,7 @@ bool ConfigInfoEvent::decode(const void* pDataPtr, UINT32 uDataSize, UINT32& uRe
     return bRet;
 }
 
-UINT32 ConfigInfoEvent::calcSize() const
+UINT32 RtdConfigInfo::calcSize() const
 {
     UINT32 uRet = sizeof(UINT32);
     uRet += MUPProtocol::getSize(_configInfo);

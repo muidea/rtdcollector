@@ -9,8 +9,8 @@
 //    Author: muidea@gmail.com
 //
 //
-#ifndef __RTDCONFIG_H_1517541490__
-#define __RTDCONFIG_H_1517541490__
+#ifndef __RTDCONFIG_H_1517557968__
+#define __RTDCONFIG_H_1517557968__
 #include "muprotocol/muprotocol.h"
 #include "muprotocol/muserialize.h"
 #include <string>
@@ -18,12 +18,12 @@
 
 namespace RtdPrococol {
 
-class ConfigInfoEvent : public IMUProtocol
+class RtdConfigInfo : public IMUProtocol
 {
 public:
-    ConfigInfoEvent();
+    RtdConfigInfo();
 
-    virtual ~ConfigInfoEvent();
+    virtual ~RtdConfigInfo();
 
     virtual bool encode(void* pBuffPtr, UINT32 uBuffSize, UINT32& uRemainSize) const;
 
@@ -47,7 +47,7 @@ public:
     };
 
 protected:
-    bool operator==(ConfigInfoEvent const& right);
+    bool operator==(RtdConfigInfo const& right);
 
     std::string _configInfo;
 };

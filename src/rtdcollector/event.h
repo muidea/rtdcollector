@@ -10,12 +10,12 @@ namespace Rtd {
 
 	class Event : public Util::RefCountedObject {
 	public:
-		Event();
+		Event() {}
 
 		virtual void OnEvent() = 0;
 
 	protected:
-		virtual ~Event();
+		virtual ~Event() {}
 	};
 
 	template <typename EventCall>

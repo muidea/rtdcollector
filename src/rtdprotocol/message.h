@@ -9,89 +9,78 @@
 //    Author: muidea@gmail.com
 //
 //
-#ifndef __MESSAGE_H_1517541490__
-#define __MESSAGE_H_1517541490__
+#ifndef __MESSAGE_H_1517557968__
+#define __MESSAGE_H_1517557968__
 #include "muprotocol/muprotocol.h"
 #include "muprotocol/muserialize.h"
 
 
 namespace RtdPrococol {
 
-struct Head
+class Head : public IMUProtocol
 {
-    UINT32 version;
-    UINT64 messageCode;
-    UINT64 serialNo;
-};
+public:
+    Head();
 
-inline UINT32 getSize(Head const& value)
-{
-    UINT32 uRet = sizeof(UINT32);
+    virtual ~Head();
 
-    uRet += MUPProtocol::getSize(value.version);
-    uRet += MUPProtocol::getSize(value.messageCode);
-    uRet += MUPProtocol::getSize(value.serialNo);
-    return uRet;
-};
+    virtual bool encode(void* pBuffPtr, UINT32 uBuffSize, UINT32& uRemainSize) const;
 
-inline bool encode(Head const& value, void* pBuffPtr, UINT32 uBuffSize, UINT32& uRemainSize)
-{
-    bool bRet = false;
-    UINT32 uPacketSize = getSize(value);
-    if (uBuffSize < uPacketSize) {
-        return false;
-    }
-    uRemainSize = uBuffSize;
-    bRet = MUPProtocol::encode(uPacketSize, (char*)pBuffPtr + uBuffSize - uRemainSize, uRemainSize, uRemainSize);
-    if (!bRet) {
-        return bRet;
-    }
+    virtual bool decode(const void* pDataPtr, UINT32 uDataSize, UINT32& uRemainSize);
 
-    bRet = MUPProtocol::encode(value.version, (char*)pBuffPtr + uBuffSize - uRemainSize, uRemainSize, uRemainSize);
-    if (!bRet) {
-        return bRet;
-    }
+    virtual UINT32 calcSize() const;
 
-    bRet = MUPProtocol::encode(value.messageCode, (char*)pBuffPtr + uBuffSize - uRemainSize, uRemainSize, uRemainSize);
-    if (!bRet) {
-        return bRet;
-    }
+    inline void setVersion(UINT32 const& value)
+    {
+        _version = value;
+    };
 
-    bRet = MUPProtocol::encode(value.serialNo, (char*)pBuffPtr + uBuffSize - uRemainSize, uRemainSize, uRemainSize);
-    if (!bRet) {
-        return bRet;
-    }
+    inline UINT32 const& getVersion() const
+    {
+        return _version;
+    };
 
-    return bRet;
-};
+    inline UINT32& peerVersion()
+    {
+        return _version;
+    };
 
-inline bool decode(const void* pDataPtr, UINT32 uDataSize, Head& value, UINT32& uRemainSize)
-{
-    bool bRet = false;
-    UINT32 uPacketSize = 0;
-    uRemainSize = uDataSize;
-    bRet = MUPProtocol::decode((char*)pDataPtr + uDataSize - uRemainSize, uRemainSize, uPacketSize, uRemainSize);
-    if (!bRet || (uPacketSize > uDataSize)) {
-        return bRet;
-    }
+    inline void setCommandCode(UINT64 const& value)
+    {
+        _commandCode = value;
+    };
 
-    bRet = MUPProtocol::decode((char*)pDataPtr + uDataSize - uRemainSize, uRemainSize, value.version, uRemainSize);
-    if (!bRet) {
-        return bRet;
-    }
+    inline UINT64 const& getCommandCode() const
+    {
+        return _commandCode;
+    };
 
-    bRet = MUPProtocol::decode((char*)pDataPtr + uDataSize - uRemainSize, uRemainSize, value.messageCode, uRemainSize);
-    if (!bRet) {
-        return bRet;
-    }
+    inline UINT64& peerCommandCode()
+    {
+        return _commandCode;
+    };
 
-    bRet = MUPProtocol::decode((char*)pDataPtr + uDataSize - uRemainSize, uRemainSize, value.serialNo, uRemainSize);
-    if (!bRet) {
-        return bRet;
-    }
+    inline void setSerialNo(UINT64 const& value)
+    {
+        _serialNo = value;
+    };
 
-    uRemainSize = uDataSize - uPacketSize;
-    return bRet;
+    inline UINT64 const& getSerialNo() const
+    {
+        return _serialNo;
+    };
+
+    inline UINT64& peerSerialNo()
+    {
+        return _serialNo;
+    };
+
+protected:
+    bool operator==(Head const& right);
+
+    UINT32 _version;
+    UINT64 _commandCode;
+    UINT64 _serialNo;
 };
 
 

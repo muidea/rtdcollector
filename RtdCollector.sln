@@ -6,7 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rtdcollector", "src\rtdcollector\rtdcollector.vcxproj", "{2CFFC576-59A4-46C3-8B3D-0E23F8520DDF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{135C322B-7209-44E3-9CAC-7A106F2047B2} = {135C322B-7209-44E3-9CAC-7A106F2047B2}
+		{2803DA7E-1EEC-43F8-9A6E-7A25E6BF76E4} = {2803DA7E-1EEC-43F8-9A6E-7A25E6BF76E4}
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D} = {D1C528B6-AA02-4D29-9D61-DC08E317A70D}
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4} = {2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "util", "src\util\util.vcxproj", "{135C322B-7209-44E3-9CAC-7A106F2047B2}"
@@ -25,6 +27,11 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dbusRecv", "test\dbusRecv\dbusRecv.vcxproj", "{7B351FBC-7E2C-40FF-BB7B-1DA84AFBD7F1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dbuswrapper", "src\dbuswrapper\dbuswrapper.vcxproj", "{2803DA7E-1EEC-43F8-9A6E-7A25E6BF76E4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{135C322B-7209-44E3-9CAC-7A106F2047B2} = {135C322B-7209-44E3-9CAC-7A106F2047B2}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rtdprotocol", "src\rtdprotocol\rtdprotocol.vcxproj", "{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -154,6 +161,22 @@ Global
 		{2803DA7E-1EEC-43F8-9A6E-7A25E6BF76E4}.Release-Lib|x64.Build.0 = Release|x64
 		{2803DA7E-1EEC-43F8-9A6E-7A25E6BF76E4}.Release-Lib|x86.ActiveCfg = Release|Win32
 		{2803DA7E-1EEC-43F8-9A6E-7A25E6BF76E4}.Release-Lib|x86.Build.0 = Release|Win32
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Debug|x64.ActiveCfg = Debug|x64
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Debug|x64.Build.0 = Debug|x64
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Debug|x86.ActiveCfg = Debug|Win32
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Debug|x86.Build.0 = Debug|Win32
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Debug-Lib|x64.ActiveCfg = Debug|x64
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Debug-Lib|x64.Build.0 = Debug|x64
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Debug-Lib|x86.ActiveCfg = Debug|Win32
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Debug-Lib|x86.Build.0 = Debug|Win32
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Release|x64.ActiveCfg = Release|x64
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Release|x64.Build.0 = Release|x64
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Release|x86.ActiveCfg = Release|Win32
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Release|x86.Build.0 = Release|Win32
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Release-Lib|x64.ActiveCfg = Release|x64
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Release-Lib|x64.Build.0 = Release|x64
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Release-Lib|x86.ActiveCfg = Release|Win32
+		{2053AFD7-38F0-4D0D-B0FA-A6BE66861BE4}.Release-Lib|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

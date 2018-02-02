@@ -6,10 +6,10 @@
 
 include $(PROJECT_BASE)/build/rules/global
 
-objects = rtdCollector event eventLoop
+objects = message rtdconfig rtdevent rtdvalue
 
-target         = rtdcollector
+target         = rtdprotocol
 target_version = $(LIBVERSION)
-target_libs    = rtdprotocol dbuswrapper
+target_libs    =
 
 include $(PROJECT_BASE)/build/rules/lib

@@ -53,19 +53,19 @@
 #if defined(_MSC_VER)
 	#if defined(UTIL_DLL)
 		#if defined(_DEBUG)
-			#define UTIL_LIB_SUFFIX "d.lib"
+			#define UTIL_LIB_SUFFIX ".lib"
 		#else
 			#define UTIL_LIB_SUFFIX ".lib"
 		#endif
 	#elif defined(_DLL)
 		#if defined(_DEBUG)
-			#define UTIL_LIB_SUFFIX "mdd.lib"
+			#define UTIL_LIB_SUFFIX "md.lib"
 		#else
 			#define UTIL_LIB_SUFFIX "md.lib"
 		#endif
 	#else
 		#if defined(_DEBUG)
-			#define UTIL_LIB_SUFFIX "mtd.lib"
+			#define UTIL_LIB_SUFFIX "mt.lib"
 		#else
 			#define UTIL_LIB_SUFFIX "mt.lib"
 		#endif

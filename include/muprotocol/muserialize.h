@@ -23,6 +23,8 @@
 
 typedef __int64 INT64;
 typedef unsigned __int64 UINT64;
+typedef float FLOAT;
+typedef double DOUBLE;
 
 #elif defined(linux) || defined(__linux) || defined(__linux__)
 typedef char INT8;
@@ -67,77 +69,77 @@ namespace MUPProtocol
 	inline  void swapEndian(void* pBytePtr, UINT32 nByteCount)
 	{
 		if (!checkCPU()) {
-			return ;
+			return;
 		}
 
-		UINT8 tmp,*ptr = (UINT8 *)pBytePtr;
-		for (UINT32 i = 0; i<nByteCount/2; i++) {
+		UINT8 tmp, *ptr = (UINT8 *)pBytePtr;
+		for (UINT32 i = 0; i < nByteCount / 2; i++) {
 			tmp = ptr[i];
-			ptr[i] = ptr[nByteCount-1-i];
-			ptr[nByteCount-1-i] = tmp;
+			ptr[i] = ptr[nByteCount - 1 - i];
+			ptr[nByteCount - 1 - i] = tmp;
 		}
 	}
 
-    template<class TypeName>
-    inline UINT32 getSize( 
-        TypeName const& value )
-    {
-        return sizeof(value);
-    }
+	template<class TypeName>
+	inline UINT32 getSize(
+		TypeName const& value)
+	{
+		return sizeof(value);
+	}
 
-    template<class TypeName>
-    inline bool encode( 
-        TypeName const& value, 
-        void* pBuffPtr, 
-        UINT32 uBuffSize, 
-        UINT32& uRemainSize )
-    {
-        assert(pBuffPtr);
+	template<class TypeName>
+	inline bool encode(
+		TypeName const& value,
+		void* pBuffPtr,
+		UINT32 uBuffSize,
+		UINT32& uRemainSize)
+	{
+		assert(pBuffPtr);
 
-        UINT32 uTotalSize = getSize(value);
+		UINT32 uTotalSize = getSize(value);
 #if _DEBUG
-        if (uBuffSize < uTotalSize) {
-            return false;
-        }
+		if (uBuffSize < uTotalSize) {
+			return false;
+		}
 #endif
-        *(TypeName*)pBuffPtr = value;
+		*(TypeName*)pBuffPtr = value;
 		swapEndian(pBuffPtr, uTotalSize);
-        uRemainSize = uBuffSize - uTotalSize;
-        return true;
-    }
+		uRemainSize = uBuffSize - uTotalSize;
+		return true;
+	}
 
-    template<class TypeName>
-    inline bool decode( 
-        const void* pDataPtr, 
-        UINT32 uDataSize, 
-        TypeName& value, 
-        UINT32& uRemainSize )
-    {
-        assert(pDataPtr);
+	template<class TypeName>
+	inline bool decode(
+		const void* pDataPtr,
+		UINT32 uDataSize,
+		TypeName& value,
+		UINT32& uRemainSize)
+	{
+		assert(pDataPtr);
 
-        UINT32 uTotalSize = getSize(value);
+		UINT32 uTotalSize = getSize(value);
 #if _DEBUG
-        if (uDataSize < uTotalSize) {
-            return false;
-        }
+		if (uDataSize < uTotalSize) {
+			return false;
+		}
 #endif
 		value = *(TypeName*)pDataPtr;
 		swapEndian(&value, uTotalSize);
-        uRemainSize = uDataSize - uTotalSize;
-        return true;
-    }
+		uRemainSize = uDataSize - uTotalSize;
+		return true;
+	}
 
-	inline UINT32 getSize( 
-		std::string const& value )
+	inline UINT32 getSize(
+		std::string const& value)
 	{
 		return value.size() + sizeof(UINT32);
 	}
 
-	inline bool encode( 
-		std::string const& value, 
-		void* pBuffPtr, 
-		UINT32 uBuffSize, 
-		UINT32& uRemainSize )
+	inline bool encode(
+		std::string const& value,
+		void* pBuffPtr,
+		UINT32 uBuffSize,
+		UINT32& uRemainSize)
 	{
 		assert(pBuffPtr);
 
@@ -147,7 +149,7 @@ namespace MUPProtocol
 			return false;
 		}
 #endif
-		if (!encode(uStringSize,pBuffPtr,uBuffSize,uRemainSize)) {
+		if (!encode(uStringSize, pBuffPtr, uBuffSize, uRemainSize)) {
 			return false;
 		}
 
@@ -156,11 +158,11 @@ namespace MUPProtocol
 		return true;
 	}
 
-	inline bool decode( 
-		const void* pDataPtr, 
-		UINT32 uDataSize, 
-		std::string& value, 
-		UINT32& uRemainSize )
+	inline bool decode(
+		const void* pDataPtr,
+		UINT32 uDataSize,
+		std::string& value,
+		UINT32& uRemainSize)
 	{
 		assert(pDataPtr);
 
@@ -180,189 +182,189 @@ namespace MUPProtocol
 		return true;
 	}
 
-    template<class TypeName>
-    inline UINT32 getSize( 
-        std::list<TypeName> const& value )
-    {
-        UINT32 uRet = 0;
+	template<typename TypeName>
+	inline UINT32 getSize(
+		std::list< TypeName > const& value)
+	{
+		UINT32 uRet = 0;
 
-        std::list<TypeName>::const_iterator iIter = value.begin();
-        for ( ; iIter != value.end(); ++iIter )
-        {
-            uRet += getSize(*iIter);
-        }
+		auto iIter = value.begin();
+		for (; iIter != value.end(); ++iIter)
+		{
+			uRet += getSize(*iIter);
+		}
 
-        return uRet  + sizeof(UINT32);
-    }
+		return uRet + sizeof(UINT32);
+	}
 
-    template<class TypeName>
-    inline bool encode( 
-        std::list<TypeName> const& value, 
-        void* pBuffPtr, 
-        UINT32 uBuffSize, 
-        UINT32& uRemainSize )
-    {
-        assert(pBuffPtr);
+	template<typename TypeName>
+	inline bool encode(
+		std::list< TypeName > const& value,
+		void* pBuffPtr,
+		UINT32 uBuffSize,
+		UINT32& uRemainSize)
+	{
+		assert(pBuffPtr);
 
-        UINT32 uDataSize = getSize(value);
+		UINT32 uDataSize = getSize(value);
 #if _DEBUG
-        if (uBuffSize < uDataSize) {
-            return false;
-        }
+		if (uBuffSize < uDataSize) {
+			return false;
+		}
 #endif
-        UINT32 uItemNum = value.size();
-        if (!encode(uItemNum,pBuffPtr,uBuffSize,uRemainSize)) {
-            return false;
-        }
+		UINT32 uItemNum = value.size();
+		if (!encode(uItemNum, pBuffPtr, uBuffSize, uRemainSize)) {
+			return false;
+		}
 
-        std::list<TypeName>::const_iterator iIter = value.begin();
-        for ( ; iIter != value.end(); ++iIter ) 
-        {
-            if (!encode(*iIter, (char*)pBuffPtr + uBuffSize - uRemainSize, uRemainSize, uRemainSize)) {
-                return false;
-            }
-        }
+		auto iIter = value.begin();
+		for (; iIter != value.end(); ++iIter)
+		{
+			if (!encode(*iIter, (char*)pBuffPtr + uBuffSize - uRemainSize, uRemainSize, uRemainSize)) {
+				return false;
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    template<class TypeName>
-    inline bool decode( 
-        const void* pDataPtr, 
-        UINT32 uDataSize, 
-        std::list<TypeName>& value, 
-        UINT32& uRemainSize )
-    {
-        assert(pDataPtr);
+	template<typename TypeName>
+	inline bool decode(
+		const void* pDataPtr,
+		UINT32 uDataSize,
+		std::list< TypeName >& value,
+		UINT32& uRemainSize)
+	{
+		assert(pDataPtr);
 
-        UINT32 uItemNum = 0;
-        if (!decode(pDataPtr, uDataSize, uItemNum, uRemainSize))
-        {
-            return false;
-        }
+		UINT32 uItemNum = 0;
+		if (!decode(pDataPtr, uDataSize, uItemNum, uRemainSize))
+		{
+			return false;
+		}
 
-        for ( UINT32 ii = 0; ii < uItemNum; ++ii )
-        {
-            TypeName typeName;
-            if (!decode((const char*)pDataPtr + uDataSize - uRemainSize, uRemainSize, typeName, uRemainSize))
-            {
-                return false;
-            }
+		for (UINT32 ii = 0; ii < uItemNum; ++ii)
+		{
+			TypeName typeName;
+			if (!decode((const char*)pDataPtr + uDataSize - uRemainSize, uRemainSize, typeName, uRemainSize))
+			{
+				return false;
+			}
 
-            value.push_back(typeName);
-        }
+			value.push_back(typeName);
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    template<class TypeName>
-    inline UINT32 getSize( 
-        std::vector<TypeName> const& value )
-    {
-        UINT32 uRet = 0;
+	template<typename TypeName>
+	inline UINT32 getSize(
+		std::vector< TypeName > const& value)
+	{
+		UINT32 uRet = 0;
 
-        std::vector<TypeName>::const_iterator iIter = value.begin();
-        for ( ; iIter != value.end(); ++iIter )
-        {
-            uRet += getSize(*iIter);
-        }
+		auto iIter = value.begin();
+		for (; iIter != value.end(); ++iIter)
+		{
+			uRet += getSize(*iIter);
+		}
 
-        return uRet  + sizeof(UINT32);
-    }
+		return uRet + sizeof(UINT32);
+	}
 
-    template<class TypeName>
-    inline bool encode( 
-        std::vector<TypeName> const& value, 
-        void* pBuffPtr, 
-        UINT32 uBuffSize, 
-        UINT32& uRemainSize )
-    {
-        assert(pBuffPtr);
+	template<typename TypeName>
+	inline bool encode(
+		std::vector< TypeName > const& value,
+		void* pBuffPtr,
+		UINT32 uBuffSize,
+		UINT32& uRemainSize)
+	{
+		assert(pBuffPtr);
 
-        UINT32 uDataSize = getSize(value);
+		UINT32 uDataSize = getSize(value);
 #if _DEBUG
-        if (uBuffSize < uDataSize) {
-            return false;
-        }
+		if (uBuffSize < uDataSize) {
+			return false;
+		}
 #endif
-        UINT32 uItemNum = value.size();
-        if (!encode(uItemNum,pBuffPtr,uBuffSize,uRemainSize)) {
-            return false;
-        }
+		UINT32 uItemNum = value.size();
+		if (!encode(uItemNum, pBuffPtr, uBuffSize, uRemainSize)) {
+			return false;
+		}
 
-        std::vector<TypeName>::const_iterator iIter = value.begin();
-        for ( ; iIter != value.end(); ++iIter ) 
-        {
-            if (!encode(*iIter, (char*)pBuffPtr + uBuffSize - uRemainSize, uRemainSize, uRemainSize)) {
-                return false;
-            }
-        }
+		auto iIter = value.begin();
+		for (; iIter != value.end(); ++iIter)
+		{
+			if (!encode(*iIter, (char*)pBuffPtr + uBuffSize - uRemainSize, uRemainSize, uRemainSize)) {
+				return false;
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    template<class TypeName>
-    inline bool decode( 
-        const void* pDataPtr, 
-        UINT32 uDataSize, 
-        std::vector<TypeName>& value, 
-        UINT32& uRemainSize )
-    {
-        assert(pDataPtr);
+	template<typename TypeName>
+	inline bool decode(
+		const void* pDataPtr,
+		UINT32 uDataSize,
+		std::vector< TypeName >& value,
+		UINT32& uRemainSize)
+	{
+		assert(pDataPtr);
 
-        UINT32 uItemNum = 0;
-        if (!decode(pDataPtr, uDataSize, uItemNum, uRemainSize))
-        {
-            return false;
-        }
+		UINT32 uItemNum = 0;
+		if (!decode(pDataPtr, uDataSize, uItemNum, uRemainSize))
+		{
+			return false;
+		}
 
-        value.reserve(uItemNum);
-        for ( UINT32 ii = 0; ii < uItemNum; ++ii )
-        {
-            TypeName typeName;
-            if (!decode((const char*)pDataPtr + uDataSize - uRemainSize, uRemainSize, typeName, uRemainSize))
-            {
-                return false;
-            }
+		value.reserve(uItemNum);
+		for (UINT32 ii = 0; ii < uItemNum; ++ii)
+		{
+			TypeName typeName;
+			if (!decode((const char*)pDataPtr + uDataSize - uRemainSize, uRemainSize, typeName, uRemainSize))
+			{
+				return false;
+			}
 
-            value.push_back(typeName);
-        }
+			value.push_back(typeName);
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    class Null
-    {
-    public:
-        Null()
-        {
-        }
+	class Null
+	{
+	public:
+		Null()
+		{
+		}
 
-        ~Null()
-        {
-        }
+		~Null()
+		{
+		}
 
-        bool encode( 
-            void* pBuffPtr, 
-            UINT32 uBuffSize, 
-            UINT32& uRemainSize )
-        {
-            return true;
-        }
+		bool encode(
+			void* pBuffPtr,
+			UINT32 uBuffSize,
+			UINT32& uRemainSize)
+		{
+			return true;
+		}
 
-        bool decode( 
-            const void* pDataPtr, 
-            UINT32 uDataSize, 
-            UINT32& uRemainSize )
-        {
-            return true;
-        }
+		bool decode(
+			const void* pDataPtr,
+			UINT32 uDataSize,
+			UINT32& uRemainSize)
+		{
+			return true;
+		}
 
-        UINT32 calcSize()
-        {
-            return 0;
-        }
-    };
+		UINT32 calcSize()
+		{
+			return 0;
+		}
+	};
 }
 
 #endif // __MUSERIALIZE_H_2242__

@@ -97,10 +97,10 @@ endif
 	find $(PROJECT_BUILD)/lib/$(OSNAME)/$(OSARCH) -name "lib*" -type f -exec cp -f  {} $(INSTALLDIR)/lib \;
 	find $(PROJECT_BUILD)/lib/$(OSNAME)/$(OSARCH) -name "lib*" -type l -exec cp -Rf {} $(INSTALLDIR)/lib \;
 
-libexecs = dbusWrapperSend-libexec dbusWrapperRecv-libexec dbusSend-libexec dbusRecv-libexec rtdTest-libexec dbuswrapper-libexec rtdcollector-libexec tinyxml2-libexec util-libexec
+libexecs = dbusWrapperSend-libexec dbusWrapperRecv-libexec dbusSend-libexec dbusRecv-libexec rtdTest-libexec dbuswrapper-libexec rtdprotocol-libexec rtdcollector-libexec tinyxml2-libexec util-libexec
 tests    =  
 samples  =  
-cleans   = dbusWrapperSend-clean dbusWrapperRecv-clean dbusSend-clean dbusRecv-clean rtdTest-clean dbuswrapper-libexec rtdcollector-clean tinyxml2-clean util-clean
+cleans   = dbusWrapperSend-clean dbusWrapperRecv-clean dbusSend-clean dbusRecv-clean rtdTest-clean dbuswrapper-libexec rtdprotocol-clean rtdcollector-clean tinyxml2-clean util-clean
 
 .PHONY: $(libexecs)
 .PHONY: $(tests)
@@ -112,11 +112,17 @@ tests: $(filter-out $(foreach f,$(OMIT),$f%),$(tests))
 samples: $(filter-out $(foreach f,$(OMIT),$f%),$(samples))
 cleans: $(filter-out $(foreach f,$(OMIT),$f%),$(cleans))
 
-rtdTest-libexec: tinyxml2-libexec util-libexec rtdcollector-libexec
+rtdTest-libexec: tinyxml2-libexec util-libexec rtdprotocol-libexec dbuswrapper-libexec rtdcollector-libexec
 	$(MAKE) -C $(PROJECT_BASE)/test/rtdTest
 
 rtdTest-clean:
 	$(MAKE) -C $(PROJECT_BASE)/test/rtdTest clean
+
+rtdcollector-libexec: tinyxml2-libexec util-libexec rtdprotocol-libexec dbuswrapper-libexec
+	$(MAKE) -C $(PROJECT_BASE)/src/rtdcollector
+
+rtdcollector-clean:
+	$(MAKE) -C $(PROJECT_BASE)/src/rtdcollector clean
 
 dbuswrapper-libexec: util-libexec
 	$(MAKE) -C $(PROJECT_BASE)/src/dbuswrapper
@@ -124,11 +130,11 @@ dbuswrapper-libexec: util-libexec
 dbuswrapper-clean:
 	$(MAKE) -C $(PROJECT_BASE)/src/dbuswrapper clean
 
-rtdcollector-libexec: tinyxml2-libexec util-libexec
-	$(MAKE) -C $(PROJECT_BASE)/src/rtdcollector
+rtdprotocol-libexec: 
+	$(MAKE) -C $(PROJECT_BASE)/src/rtdprotocol
 
-rtdcollector-clean:
-	$(MAKE) -C $(PROJECT_BASE)/src/rtdcollector clean
+rtdprotocol-clean:
+	$(MAKE) -C $(PROJECT_BASE)/src/rtdprotocol clean
 
 tinyxml2-libexec: 
 	$(MAKE) -C $(PROJECT_BASE)/src/tinyxml2

@@ -9,8 +9,8 @@
 //    Author: muidea@gmail.com
 //
 //
-#ifndef __RTDVALUE_H_1517541490__
-#define __RTDVALUE_H_1517541490__
+#ifndef __RTDVALUE_H_1517557968__
+#define __RTDVALUE_H_1517557968__
 #include "muprotocol/muprotocol.h"
 #include "muprotocol/muserialize.h"
 #include <string>
@@ -202,6 +202,40 @@ protected:
 };
 
 typedef std::vector<RtdData> RtdDataVector;
+
+class RtdDataInfo : public IMUProtocol
+{
+public:
+    RtdDataInfo();
+
+    virtual ~RtdDataInfo();
+
+    virtual bool encode(void* pBuffPtr, UINT32 uBuffSize, UINT32& uRemainSize) const;
+
+    virtual bool decode(const void* pDataPtr, UINT32 uDataSize, UINT32& uRemainSize);
+
+    virtual UINT32 calcSize() const;
+
+    inline void setDataVector(RtdDataVector const& value)
+    {
+        _dataVector = value;
+    };
+
+    inline RtdDataVector const& getDataVector() const
+    {
+        return _dataVector;
+    };
+
+    inline RtdDataVector& peerDataVector()
+    {
+        return _dataVector;
+    };
+
+protected:
+    bool operator==(RtdDataInfo const& right);
+
+    RtdDataVector _dataVector;
+};
 
 
 }

@@ -2,6 +2,7 @@
 #include "eventLoop.h"
 #include "util/thread.h"
 #include "util/exception.h"
+#include "dbuswrapper/endpoint.h"
 #include <memory>
 #include <iostream>
 
@@ -10,7 +11,7 @@ namespace Rtd
 	typedef std::shared_ptr<RtdDataVector> RtdDataVectorPtr;
 	typedef std::shared_ptr<RtdEventVector> RtdEventVectorPtr;
 
-class RtdCollectorImpl : public RtdCollector
+class RtdCollectorImpl : public RtdCollector, public DBusWrapper::EndPointCallBack
 {
   public:
 	RtdCollectorImpl();
@@ -30,6 +31,10 @@ class RtdCollectorImpl : public RtdCollector
     void pushRtdData(RtdDataDeque const &rtdData);
 
     void pushRtdEvent(RtdEventDeque const &rtdEvent);
+
+	// DBusWrapper::EndPointCallBack
+	virtual void onMessage(DBusWrapper::Message const& msg);
+	
 protected:
 	void pushConfigInfoInternal(ConfigInfo const& cfgInfo);
 	void pushRtdDataInternal(RtdDataVectorPtr ptr);
@@ -114,6 +119,11 @@ void RtdCollectorImpl::pushRtdEvent(RtdEventDeque const &rtdEvent)
 	auto eventFunc = std::bind(&RtdCollectorImpl::pushRtdEventInternal, this, ptr);
 
 	m_eventLoop.invoke(eventFunc);
+}
+
+void RtdCollectorImpl::onMessage(DBusWrapper::Message const & msg)
+{
+
 }
 
 void RtdCollectorImpl::pushConfigInfoInternal(ConfigInfo const& cfgInfo)

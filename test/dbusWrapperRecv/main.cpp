@@ -25,8 +25,6 @@ int main(int argc, char ** argv)
 	{
 		std::getline(std::cin, value);
 
-		pEndPoint->sendMessage(value);
-
 	} while (value.compare("Q") != 0);
 
 	pEndPoint->unregisterEndPoint();

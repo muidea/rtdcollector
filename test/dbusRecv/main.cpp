@@ -24,7 +24,7 @@ void listen_signal()
         return;  
   
    //步骤2:给连接名分配一个可记忆名字test.singal.dest作为Bus name，这个步骤不是必须的,但推荐这样处理  
-    ret =dbus_bus_request_name(connection,"test.singal.dest",DBUS_NAME_FLAG_REPLACE_EXISTING,&err);  
+    ret =dbus_bus_request_name(connection,"com.supos.shuttle.drivermanager.recv",DBUS_NAME_FLAG_REPLACE_EXISTING,&err);  
     if(dbus_error_is_set(&err)){  
         fprintf(stderr,"Name Error%s\n",err.message);  
         dbus_error_free(&err);  
@@ -33,7 +33,7 @@ void listen_signal()
         return;  
   
     //步骤3:通知D-Bus daemon，希望监听来行接口test.signal.Type的信号  
-    dbus_bus_add_match(connection,"type='signal',interface='test.signal.Type'",&err);  
+    dbus_bus_add_match(connection,"type='signal',interface='com.supos.shuttle.drivermanager'",&err);  
     //实际需要发送东西给daemon来通知希望监听的内容，所以需要flush  
     dbus_connection_flush(connection);  
     if(dbus_error_is_set(&err)){  
@@ -50,7 +50,7 @@ void listen_signal()
             continue;  
         }  
      
-        if(dbus_message_is_signal(msg,"test.signal.Type","Test")){  
+        if(dbus_message_is_signal(msg,"com.supos.shuttle.drivermanager","Test")){  
             if(!dbus_message_iter_init(msg,&arg))  
                 fprintf(stderr,"MessageHas no Param");  
             else if(dbus_message_iter_get_arg_type(&arg)!= DBUS_TYPE_STRING)  

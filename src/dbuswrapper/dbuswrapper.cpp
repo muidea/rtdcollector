@@ -42,7 +42,6 @@ namespace DBusWrapper
 			std::cout << "dbus_bus_add_match failed, oss:" << oss.str() << std::endl;
 		}
 		dbus_connection_flush(m_connection);
-
 	}
 
 	void DBusWrapper::uninitialize()
@@ -64,19 +63,18 @@ namespace DBusWrapper
 		DBusMessage* dbusMsg = dbus_message_new_signal(MessagePath.c_str(), m_scopeNameSpace.c_str(), MessageName.c_str());
 		if (dbusMsg) {
 			DBusMessageIter dbusMsgIter;
+			dbus_uint32_t  serial = 0;
 			dbus_message_iter_init_append(dbusMsg, &dbusMsgIter);
-			if (!dbus_message_iter_append_basic(&dbusMsgIter, DBUS_TYPE_STRING, msg.c_str())) {
-
+			const char* pPtr = msg.c_str();
+			if (!dbus_message_iter_append_basic(&dbusMsgIter, DBUS_TYPE_STRING, &pPtr)) {
 			}
 
-			if (!dbus_connection_send(m_connection, dbusMsg, NULL)) {
-
+			if (!dbus_connection_send(m_connection, dbusMsg, &serial)) {
 			}
 			dbus_connection_flush(m_connection);
 			dbus_message_unref(dbusMsg);
 		}
 		else {
-
 		}
 	}
 
@@ -99,16 +97,9 @@ namespace DBusWrapper
 				dbus_message_iter_get_basic(&dbusMsgIter, &value);
 
 				msg.assign(value.str);
-				if (msg.size() > 0) {
-					std::cout << msg << std::endl;
-				}
-			} else {
-				std::cout << "dbus_message_is_signal failed" << std::endl;
 			}
 
 			dbus_message_unref(dbusMsg);
-		} else {
-			std::cout << "dbus_connection_pop_message failed" << std::endl;
 		}
 	}
 

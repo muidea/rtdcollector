@@ -23,7 +23,7 @@ int send_a_signal(char * sigvalue)
 	if (connection == NULL)
 		return -1;
 #if 1  
-	ret = dbus_bus_request_name(connection, "test.singal.source", DBUS_NAME_FLAG_REPLACE_EXISTING, &err);
+	ret = dbus_bus_request_name(connection, "com.supos.shuttle.drivermanager.send", DBUS_NAME_FLAG_REPLACE_EXISTING, &err);
 	if (dbus_error_is_set(&err)) {
 		fprintf(stderr, "Name Err :%s\n", err.message);
 		dbus_error_free(&err);
@@ -32,7 +32,7 @@ int send_a_signal(char * sigvalue)
 		return -1;
 #endif  
 
-	if ((msg = dbus_message_new_signal("/test/signal/Object", "test.signal.Type", "Test")) == NULL) {
+	if ((msg = dbus_message_new_signal("/com/supos/shuttle/drivermanager", "com.supos.shuttle.drivermanager", "Test")) == NULL) {
 		fprintf(stderr, "MessageNULL\n");
 		return -1;
 	}

@@ -1,6 +1,7 @@
 #ifndef __ENDPOINT_H_1645__
 #define  __ENDPOINT_H_1645__
 #include "def.h"
+#include <dbus/dbus.h>
 #include <string>
 
 namespace DBusWrapper
@@ -24,6 +25,10 @@ namespace DBusWrapper
 		virtual void unregisterEndPoint() = 0;
 
 		virtual void sendMessage(Message const& msg) = 0;
+
+		virtual void postMessage(DBusMessage* dbusMsg) = 0;
+
+		virtual void sendMessage(DBusMessage* dbusMsg) = 0;
 
 		virtual void release() = 0;
 

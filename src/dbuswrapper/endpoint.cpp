@@ -22,6 +22,10 @@ namespace DBusWrapper
 
 		virtual void sendMessage(Message const& msg);
 
+		virtual void postMessage(DBusMessage* dbusMsg);
+
+		virtual void sendMessage(DBusMessage* dbusMsg);
+
 		virtual void run();
 		
 		virtual void release();
@@ -85,6 +89,16 @@ namespace DBusWrapper
 	void EndPointImpl::sendMessage(Message const& msg)
 	{
 		m_dbusWrapper.sendMessage(msg);
+	}
+
+	void EndPointImpl::sendMessage(DBusMessage* dbusMsg)
+	{
+		m_dbusWrapper.sendMessage(dbusMsg);
+	}
+
+	void EndPointImpl::postMessage(DBusMessage* dbusMsg)
+	{
+		m_dbusWrapper.postMessage(dbusMsg);
 	}
 
 	void EndPointImpl::run()

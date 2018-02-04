@@ -17,8 +17,12 @@ namespace DBusWrapper
 		void uninitialize();
 
 		void sendMessage(std::string const& msg);
-
+		
 		bool recvMessage(std::string& msg);
+
+		void sendMessage(DBusMessage* dbusMsg);
+
+		void postMessage(DBusMessage* dbusMsg);
 
 		bool isAvailable() const;
 

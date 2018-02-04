@@ -78,6 +78,19 @@ namespace DBusWrapper
 		}
 	}
 
+	void DBusWrapper::sendMessage(DBusMessage* dbusMsg)
+	{
+
+	}
+
+	void DBusWrapper::postMessage(DBusMessage* dbusMsg)
+	{
+		dbus_uint32_t  serial = 0;
+		if (!dbus_connection_send(m_connection, dbusMsg, &serial)) {
+		}
+		dbus_connection_flush(m_connection);
+	}
+
 	bool DBusWrapper::recvMessage(std::string& msg)
 	{
 		bool retVal = false;

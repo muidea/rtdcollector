@@ -49,6 +49,13 @@ namespace Rtd
 		Util::UInt64 quality;
 		Value value;
 
+		RtdData()
+		: ownerID(0)
+		, timeStamp(0)
+		, quality(0)
+		{
+		}
+
 		RtdData(Util::UInt64 ownerID, Util::UInt64 timeStamp, Util::UInt64 quality, Value value)
 			: ownerID(ownerID)
 			, timeStamp(timeStamp)
@@ -83,6 +90,13 @@ namespace Rtd
 		Util::UInt64 ownerID;
 		Util::UInt64 timeStamp;
 		Util::UInt64 eventID;
+
+		RtdEvent()
+		: ownerID(0)
+		, timeStamp(0)
+		, eventID(0)
+		{
+		}
 
 		RtdEvent(RtdEvent const& right)
 			:ownerID(right.ownerID)

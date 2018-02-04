@@ -15,4 +15,17 @@ namespace RtdDBus
         return dbus_message_iter_append_basic(&dbusMsgIter, DBUS_TYPE_STRING, &pPtr);
     }
     
+    bool decodeRtdConfig(DBusMessage* dbusMsg, Rtd::ConfigInfo& rtdConfig)
+    {
+        DBusMessageIter dbusMsgIter;
+        DBusBasicValue value;
+        dbus_message_iter_init(dbusMsg,&dbusMsgIter);
+
+        if (dbus_message_iter_get_arg_type(&dbusMsgIter)!= DBUS_TYPE_STRING) {
+            return false;
+        }
+        
+        dbus_message_iter_get_basic(&dbusMsgIter,&value);
+        return true;
+    }
 }

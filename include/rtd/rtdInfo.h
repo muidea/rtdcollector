@@ -3,9 +3,10 @@
 
 #include <deque>
 #include <vector>
-#include "tinyxml2/tinyxml2.h"
 #include "util/util.h"
-#include "rtd/value.h"
+#include "value.h"
+#include "tinyxml2/tinyxml2.h"
+
 
 namespace Rtd
 {

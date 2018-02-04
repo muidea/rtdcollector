@@ -1,7 +1,7 @@
 #ifndef __RTDCOLLECTOR_H_0947__
 #define __RTDCOLLECTOR_H_0947__
 #include "def.h"
-#include "rtdInfo.h"
+#include "rtd/rtdInfo.h"
 
 namespace Rtd
 {

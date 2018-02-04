@@ -100,7 +100,7 @@ endif
 libexecs = dbusWrapperSend-libexec dbusWrapperRecv-libexec dbusSend-libexec dbusRecv-libexec rtdTest-libexec dbuswrapper-libexec rtdprotocol-libexec rtdcollector-libexec tinyxml2-libexec util-libexec
 tests    =  
 samples  =  
-cleans   = dbusWrapperSend-clean dbusWrapperRecv-clean dbusSend-clean dbusRecv-clean rtdTest-clean dbuswrapper-libexec rtdprotocol-clean rtdcollector-clean tinyxml2-clean util-clean
+cleans   = dbusWrapperSend-clean dbusWrapperRecv-clean dbusSend-clean dbusRecv-clean rtdTest-clean dbuswrapper-clean rtdprotocol-clean rtdcollector-clean tinyxml2-clean util-clean
 
 .PHONY: $(libexecs)
 .PHONY: $(tests)

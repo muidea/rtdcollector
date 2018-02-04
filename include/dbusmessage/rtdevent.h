@@ -6,6 +6,8 @@
 namespace RtdDBus
 {
     bool encodeRtdEvent(Rtd::RtdEventVector const& rtdEvent, DBusMessage* dbusMsg);
+
+    bool decodeRtdEvent(DBusMessage* dbusMsg, Rtd::RtdEventVector& rtdEvent);
 }
 
 

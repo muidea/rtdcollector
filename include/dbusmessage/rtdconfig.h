@@ -6,6 +6,8 @@
 namespace RtdDBus
 {
     bool encodeRtdConfig(Rtd::ConfigInfo const& rtdConfig, DBusMessage* dbusMsg);
+
+    bool decodeRtdConfig(DBusMessage* dbusMsg, Rtd::ConfigInfo& rtdConfig);
 }
 
 #endif // __RTDCONFIG_H_1333__

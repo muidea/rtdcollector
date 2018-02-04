@@ -1,7 +1,7 @@
 #
 # Makefile
 #
-# Makefile for DBusMessage
+# Makefile for Poco Foundation
 #
 
 include $(PROJECT_BASE)/build/rules/global
@@ -9,11 +9,10 @@ include $(PROJECT_BASE)/build/rules/global
 INCLUDE += -I /usr/local/dbus-1.12.2/include/dbus-1.0 -I /usr/local/lib/dbus-1.0/include
 LIBRARY += -L/usr/local/lib
 SYSLIBS += -ldbus-1
+objects = main
 
-objects = rtdconfig rtddata rtdevent
-
-target         = dbusmessage
+target         = dbusmessageTest
 target_version = $(LIBVERSION)
-target_libs    = tinyxml2
+target_libs    = dbusmessage tinyxml2
 
-include $(PROJECT_BASE)/build/rules/lib
+include $(PROJECT_BASE)/build/rules/exec

@@ -12,7 +12,7 @@ namespace RtdDBus
         const Util::UInt32 totalSize = rtdEvent.size();
         dbus_message_iter_append_basic(&dbusMsgIter, DBUS_TYPE_UINT32, &totalSize);
         
-        dbus_message_iter_open_container(&dbusMsgIter, DBUS_TYPE_ARRAY, "(rtdEvent)",&vectorIter);
+        dbus_message_iter_open_container(&dbusMsgIter, DBUS_TYPE_ARRAY, "(ttt)",&vectorIter);
         for (auto iter = rtdEvent.begin(); iter != rtdEvent.end(); ++iter) {
             Rtd::RtdEvent const& val = *iter;
 

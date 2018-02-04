@@ -6,6 +6,8 @@
 namespace RtdDBus
 {
     bool encodeRtdData(Rtd::RtdDataVector const& rtdData, DBusMessage* dbusMsg);
+    
+    bool decodeRtdData(DBusMessage* dbusMsg, Rtd::RtdDataVector& rtdData);
 }
 
 #endif // __RTD_DATA_H_1403__

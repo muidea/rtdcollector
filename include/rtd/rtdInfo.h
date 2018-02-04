@@ -83,6 +83,23 @@ namespace Rtd
 
 			return *this;
 		}
+
+		bool operator==(RtdData const& right) const
+		{
+			if(this->ownerID != right.ownerID) {
+				return false;
+			}
+
+			if(this->timeStamp != right.timeStamp) {
+				return false;
+			}
+
+			if(this->quality != right.quality) {
+				return false;
+			}
+
+			return this->value == right.value;
+		}
 	};
 
 	struct RtdEvent
@@ -113,6 +130,19 @@ namespace Rtd
 			}
 			return *this;
 		}
+
+		bool operator==(RtdEvent const& right) const
+		{
+			if(this->ownerID != right.ownerID) {
+				return false;
+			}
+
+			if(this->timeStamp != right.timeStamp) {
+				return false;
+			}
+
+			return this->eventID == right.eventID;
+		}		
 	};
 
 	// RtdTag

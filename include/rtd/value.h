@@ -134,6 +134,53 @@ namespace Rtd
 
 			return *this;
 		}
+
+		bool operator==(_VALUE const& right) const {
+			if (this->vt != right.vt) {
+				return false;
+			}
+
+			switch (right.vt)
+			{
+			case ValueType_Bool:
+				return this->boolVal == right.boolVal;
+				break;
+			case ValueType_I1:
+				return this->i1Val == right.i1Val;
+				break;
+			case ValueType_I2:
+				return this->i2Val == right.i2Val;
+				break;
+			case ValueType_I4:
+				return this->i4Val == right.i4Val;
+				break;
+			case ValueType_I8:
+				return this->i8Val == right.i8Val;
+				break;
+			case ValueType_UI1:
+				return this->ui1Val == right.ui1Val;
+				break;
+			case ValueType_UI2:
+				return this->ui2Val == right.ui2Val;
+				break;
+			case ValueType_UI4:
+				return this->ui4Val == right.ui4Val;
+			case ValueType_UI8:
+				return this->ui8Val == right.ui8Val;
+				break;
+			case ValueType_Float:
+				// need improve
+				return this->fltVal == right.fltVal;
+				break;
+			case ValueType_Double:
+				// need improve
+				return this->dblVal == right.dblVal;
+			default:
+				break;
+			}
+
+			return false;
+		}
 	} Value;
 }
 

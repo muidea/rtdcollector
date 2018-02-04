@@ -20,7 +20,7 @@ namespace DBusWrapper
 		
 		bool recvMessage(std::string& msg);
 
-		void sendMessage(DBusMessage* dbusMsg);
+		DBusMessage* sendMessage(DBusMessage* dbusMsg);
 
 		void postMessage(DBusMessage* dbusMsg);
 

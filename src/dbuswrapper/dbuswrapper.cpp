@@ -51,7 +51,7 @@ namespace DBusWrapper
 			if (dbus_error_is_set(&m_err)) {
 
 			}
-			dbus_connection_flush(m_connection);
+			dbus_connection_flush(m_connection);		
 
 			dbus_connection_unref(m_connection);
 			m_connection = nullptr;
@@ -78,9 +78,14 @@ namespace DBusWrapper
 		}
 	}
 
-	void DBusWrapper::sendMessage(DBusMessage* dbusMsg)
+	DBusMessage* DBusWrapper::sendMessage(DBusMessage* dbusMsg)
 	{
+		DBusMessage* pReply = dbus_connection_send_with_reply_and_block(m_connection, dbusMsg, -1, &m_err);
+		if (dbus_error_is_set(&m_err)) {
+			return nullptr;
+		}
 
+		return pReply;
 	}
 
 	void DBusWrapper::postMessage(DBusMessage* dbusMsg)

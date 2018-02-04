@@ -13,6 +13,7 @@
 #include "rtd/protocol.h"
 #include "tinyxml2/tinyxml2.h"
 #include <memory>
+#include <sstream>
 #include <iostream>
 
 namespace Rtd
@@ -45,12 +46,16 @@ class RtdCollectorImpl : public RtdCollector, public DBusWrapper::EndPointCallBa
 	virtual void onMessage(DBusWrapper::Message const& msg);
 	
 protected:
+	void pushRegisterInternal();
+	void pushUnregisterInternal();
 	void pushConfigInfoInternal(ConfigInfo const& cfgInfo);
 	void pushRtdDataInternal(RtdDataVectorPtr ptr);
 	void pushRtdEventInternal(RtdEventVectorPtr ptr);
 
 protected:
 	RtdCollectorSink * m_pCollectorSink;
+
+	std::string m_collectorName;
 
 	Util::UInt64 m_currentSerialNo;
 
@@ -149,100 +154,64 @@ void RtdCollectorImpl::onMessage(DBusWrapper::Message const & msg)
 
 }
 
-void RtdCollectorImpl::pushConfigInfoInternal(ConfigInfo const& cfgInfo)
+void RtdCollectorImpl::pushRegisterInternal()
 {
-	RtdPrococol::Head head;
-	head.setVersion(Rtd::Current_Verion);
-	head.setCommandCode(Rtd::RTD_CONFIG_NOTIFY);
-	head.setSerialNo(++m_currentSerialNo);
-
-	RtdPrococol::RtdConfigInfo configInfo;
-	tinyxml2::XMLPrinter printer;
-	cfgInfo->Print(&printer);
-	configInfo.setConfigInfo(printer.CStr());
-
-	Rtd::RtdConfigNotify rtdConfigNotify(head, configInfo);
-
-	Util::UInt32 totalSize = rtdConfigNotify.calcSize();
-	Util::UInt32 remainSize = totalSize;
-	char* pBuffPtr = new char[totalSize];
-	rtdConfigNotify.encode(pBuffPtr, totalSize, remainSize);
-	std::string data(pBuffPtr, totalSize);
+	std::stringstream oss;
+	oss << "/com/supos/shuttle/drivermanager/" << m_collectorName;
+	DBusMessage* msg = dbus_message_new_method_call("com.supos.shuttle.drivermanager", oss.str().c_str(), "com.supos.shuttle.drivermanager", "register");
 
 	if (m_endPoint) {
-		m_endPoint->sendMessage(data);
+		m_endPoint->sendMessage(msg);
 	}
 
-	delete []pBuffPtr;
+	dbus_message_unref(msg);
+}
+
+void RtdCollectorImpl::pushUnregisterInternal()
+{
+	std::stringstream oss;
+	oss << "/com/supos/shuttle/drivermanager/" << m_collectorName;
+	DBusMessage* msg = dbus_message_new_method_call("com.supos.shuttle.drivermanager", oss.str().c_str(), "com.supos.shuttle.drivermanager", "unregister");
+
+	if (m_endPoint) {
+		m_endPoint->sendMessage(msg);
+	}
+
+	dbus_message_unref(msg);
+}
+
+void RtdCollectorImpl::pushConfigInfoInternal(ConfigInfo const& cfgInfo)
+{
+	DBusMessage* msg = dbus_message_new_signal("/com/supos/shuttle/drivermanager", "com.supos.shuttle.drivermanager", "updateConfig");
+	RtdDBus::encodeRtdConfig(cfgInfo, msg);
+
+	if (m_endPoint) {
+		m_endPoint->postMessage(msg);
+	}
+
+	dbus_message_unref(msg);
 }
 void RtdCollectorImpl::pushRtdDataInternal(RtdDataVectorPtr ptr)
 {
-	RtdPrococol::Head head;
-	head.setVersion(Rtd::Current_Verion);
-	head.setCommandCode(Rtd::RTD_DATA_NOTIFY);
-	head.setSerialNo(++m_currentSerialNo);
-
-	RtdPrococol::RtdDataInfo rtdData;
-	RtdPrococol::RtdDataVector& dataVector = rtdData.peerDataVector();
-	dataVector.reserve(ptr->size());
-	for (auto iter = ptr->begin(); iter != ptr->end(); ++iter) {
-		RtdPrococol::RtdData rt;
-		rt.setOwnerID(iter->ownerID);
-		rt.setTimeStamp(iter->timeStamp);
-		rt.setQuality(iter->quality);
-
-		RtdPrococol::RtdValue v;
-		RtdValue2RtdProtocolValue(iter->value, v);
-		rt.setValue(v);
-		dataVector.push_back(rt);
-	}
-
-	Rtd::RtdDataNotify rtdDataNotify(head, rtdData);
-
-	Util::UInt32 totalSize = rtdDataNotify.calcSize();
-	Util::UInt32 remainSize = totalSize;
-	char* pBuffPtr = new char[totalSize];
-	rtdDataNotify.encode(pBuffPtr, totalSize, remainSize);
-	std::string data(pBuffPtr, totalSize);
+	DBusMessage* msg = dbus_message_new_signal("/com/supos/shuttle/drivermanager", "com.supos.shuttle.drivermanager", "updateRtdData");
+	RtdDBus::encodeRtdData(*ptr, msg);
 
 	if (m_endPoint) {
-		m_endPoint->sendMessage(data);
+		m_endPoint->postMessage(msg);
 	}
 
-	delete[]pBuffPtr;
+	dbus_message_unref(msg);
 }
 void RtdCollectorImpl::pushRtdEventInternal(RtdEventVectorPtr ptr)
 {
-	RtdPrococol::Head head;
-	head.setVersion(Rtd::Current_Verion);
-	head.setCommandCode(Rtd::RTD_EVENT_NOTIFY);
-	head.setSerialNo(++m_currentSerialNo);
-
-	RtdPrococol::RtdEventInfo rtdEvent;
-	RtdPrococol::RtdEventVector& eventVector = rtdEvent.peerEventVector();
-	eventVector.reserve(ptr->size());
-	for (auto iter = ptr->begin(); iter != ptr->end(); ++iter) {
-		RtdPrococol::RtdEvent rt;
-		rt.setOwnerID(iter->ownerID);
-		rt.setTimeStamp(iter->timeStamp);
-		rt.setEventID(iter->eventID);
-
-		eventVector.push_back(rt);
-	}
-
-	Rtd::RtdEventNotify rtdEventNotify(head, rtdEvent);
-
-	Util::UInt32 totalSize = rtdEventNotify.calcSize();
-	Util::UInt32 remainSize = totalSize;
-	char* pBuffPtr = new char[totalSize];
-	rtdEventNotify.encode(pBuffPtr, totalSize, remainSize);
-	std::string data(pBuffPtr, totalSize);
+	DBusMessage* msg = dbus_message_new_signal("/com/supos/shuttle/drivermanager", "com.supos.shuttle.drivermanager", "updateRtdEvent");
+	RtdDBus::encodeRtdEvent(*ptr, msg);
 
 	if (m_endPoint) {
-		m_endPoint->sendMessage(data);
+		m_endPoint->postMessage(msg);
 	}
 
-	delete[]pBuffPtr;
+	dbus_message_unref(msg);
 }
 }
 

@@ -100,34 +100,51 @@ namespace RtdDBus
                 case DBUS_TYPE_BOOLEAN:
                     {
                         rtd.value.vt = Rtd::ValueType_Bool;
-                        rtd.value.boolVal = value.
+                        rtd.value.boolVal = value.i16 > 0;
                     }
                     break;
                 case DBUS_TYPE_INT16:
+                    {
+                        rtd.value.vt = Rtd::ValueType_I2;
+                        rtd.value.i2Val = value.i16;
+                    }
                     break;
                 case DBUS_TYPE_INT32:
+                    {
+                        rtd.value.vt = Rtd::ValueType_I4;
+                        rtd.value.i4Val = value.i32;
+                    }
                     break;
                 case DBUS_TYPE_INT64:
+                    {
+                        rtd.value.vt = Rtd::ValueType_Bool;
+                        rtd.value.i8Val = value.i64;
+                    }
                     break;
                 case DBUS_TYPE_UINT16:
+                    {
+                        rtd.value.vt = Rtd::ValueType_UI2;
+                        rtd.value.ui2Val = value.u16;
+                    }
                     break;
                 case DBUS_TYPE_UINT32:
+                    {
+                        rtd.value.vt = Rtd::ValueType_UI4;
+                        rtd.value.ui4Val = value.u32;
+                    }
                     break;
                 case DBUS_TYPE_UINT64:
+                    {
+                        rtd.value.vt = Rtd::ValueType_UI8;
+                        rtd.value.ui8Val = value.u64;
+                    }
                     break;
                 case DBUS_TYPE_DOUBLE:
+                    {
+                        rtd.value.vt = Rtd::ValueType_Double;
+                        rtd.value.dblVal = value.dbl;
+                    }
                     break;
-            }
-            dbus_message_iter_recurse(&structIter, &valIter);
-            if(dbus_message_iter_get_arg_type(&valIter) == DBUS_TYPE_BYTE) {
-                dbus_message_iter_get_basic(&valIter, &value);
-                rtd.value.vt = value.byt;
-            }
-
-            dbus_message_iter_next(&valIter);
-            if(dbus_message_iter_get_arg_type(&valIter) == DBUS_TYPE_DOUBLE) {
-                dbus_message_iter_get_basic(&valIter, &value);
-                rtd.value.dblVal = value.dbl;
             }
 
             rtdData.push_back(rtd);

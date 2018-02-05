@@ -16,7 +16,7 @@ namespace DBusWrapper
 	class DBusWrapper
 	{
 	public:
-		DBusWrapper(std::string const& nameSpace, DBusWrapperSink* pSink);
+		DBusWrapper(std::string const& interface, DBusWrapperSink* pSink);
 
 		~DBusWrapper();
 
@@ -33,7 +33,7 @@ namespace DBusWrapper
 		bool isAvailable() const;
 
 	protected:
-		std::string m_scopeNameSpace;
+		std::string m_interface;
 		std::string m_signalRule;
 		std::string m_methodRule;
 

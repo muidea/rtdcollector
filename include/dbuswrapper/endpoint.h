@@ -37,7 +37,7 @@ namespace DBusWrapper
 
 }
 
-DBusWrapper_API DBusWrapper::EndPoint* GetEndPoint(std::string const& nameSpace, DBusWrapper::EndPointCallBack* pCallBack);
+DBusWrapper_API DBusWrapper::EndPoint* GetEndPoint(std::string const& interface, DBusWrapper::EndPointCallBack* pCallBack);
 
 
 #endif //  __ENDPOINT_H_1645__

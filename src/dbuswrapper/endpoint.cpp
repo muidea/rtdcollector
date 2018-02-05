@@ -15,7 +15,7 @@ namespace DBusWrapper
 		, protected DBusWrapperSink
 	{
 	public:
-		EndPointImpl(std::string const& nameSpace, EndPointCallBack* pCallBack);
+		EndPointImpl(std::string const& interface, EndPointCallBack* pCallBack);
 
 		virtual ~EndPointImpl();
 
@@ -56,8 +56,8 @@ namespace DBusWrapper
 	};
 
 
-	EndPointImpl::EndPointImpl(std::string const& nameSpace, EndPointCallBack* pCallBack)
-		: m_dbusWrapper(nameSpace, this)
+	EndPointImpl::EndPointImpl(std::string const& interface, EndPointCallBack* pCallBack)
+		: m_dbusWrapper(interface, this)
 		, m_pCallBack(pCallBack)
 		, m_eventloopStatus(INVALID_STATUS)
 	{
@@ -135,9 +135,9 @@ namespace DBusWrapper
 	}
 }
 
-DBusWrapper::EndPoint* GetEndPoint(std::string const& nameSpace, DBusWrapper::EndPointCallBack* pCallBack)
+DBusWrapper::EndPoint* GetEndPoint(std::string const& interface, DBusWrapper::EndPointCallBack* pCallBack)
 {
-	DBusWrapper::EndPoint* pPtr = new DBusWrapper::EndPointImpl(nameSpace, pCallBack);
+	DBusWrapper::EndPoint* pPtr = new DBusWrapper::EndPointImpl(interface, pCallBack);
 
 	return pPtr;
 }

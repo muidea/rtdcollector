@@ -7,17 +7,17 @@ namespace DBusWrapper
 	const std::string MessagePath = "/com/supos/shuttle/drivermanager";
 	const std::string MessageName = "RtMessage";
 
-	DBusWrapper::DBusWrapper(std::string const& nameSpace, DBusWrapperSink* pSink)
+	DBusWrapper::DBusWrapper(std::string const& interface, DBusWrapperSink* pSink)
 		: m_connection(nullptr)
-		, m_scopeNameSpace(nameSpace)
+		, m_interface(interface)
 		, m_pSink(pSink)
 	{
 		std::stringstream sigalOss;
-		sigalOss << "type='signal',interface='" << m_scopeNameSpace << "'";
+		sigalOss << "type='signal',interface='" << m_interface << "'";
 		m_signalRule = sigalOss.str();
 
 		std::stringstream methodOss;
-		methodOss << "type='method',interface='" << m_scopeNameSpace << "'";
+		methodOss << "type='method_call',interface='" << m_interface << "'";
 		m_methodRule = methodOss.str();
 
 		dbus_error_init(&m_err);
@@ -51,7 +51,7 @@ namespace DBusWrapper
 			std::cout << "dbus_bus_add_match failed, sigalRule:" << m_signalRule << std::endl;
 		}
 
-		//dbus_bus_add_match(m_connection, m_methodRule.c_str(), &m_err);
+		dbus_bus_add_match(m_connection, m_methodRule.c_str(), &m_err);
 		if (dbus_error_is_set(&m_err)) {
 			std::cout << "dbus_bus_add_match failed, methodRule:" << m_methodRule << std::endl;
 		}

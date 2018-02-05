@@ -14,8 +14,13 @@ int main(int argc, char ** argv)
 	{
 		std::getline(std::cin, value);
 
-		//pEndPoint->sendMessage(value);
+		const char* ptr = value.c_str();
+		DBusMessage* msg = dbus_message_new_signal("/com/supos/shuttle/drivermanager/demo", nameSpace.c_str(), "test");
+		DBusMessageIter msgIter;
+		dbus_message_iter_init_append(msg, &msgIter);		
+		dbus_message_iter_append_basic(&msgIter, DBUS_TYPE_STRING, &ptr);
 
+		pEndPoint->postMessage(msg);
 	} while (value.compare("Q") != 0);
 
 	pEndPoint->unregisterEndPoint();

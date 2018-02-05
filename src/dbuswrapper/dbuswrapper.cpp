@@ -34,6 +34,8 @@ namespace DBusWrapper
 
 	void DBusWrapper::initialize(std::string const& localName)
 	{
+		std::cout << "DBusWrapper::initialize" << std::endl;
+
 		m_connection = dbus_bus_get(DBUS_BUS_SESSION, &m_err);
 		if (dbus_error_is_set(&m_err)) {
 			std::cout << "dbus_bus_get failed" << std::endl;
@@ -49,7 +51,7 @@ namespace DBusWrapper
 			std::cout << "dbus_bus_add_match failed, sigalRule:" << m_signalRule << std::endl;
 		}
 
-		dbus_bus_add_match(m_connection, m_methodRule.c_str(), &m_err);
+		//dbus_bus_add_match(m_connection, m_methodRule.c_str(), &m_err);
 		if (dbus_error_is_set(&m_err)) {
 			std::cout << "dbus_bus_add_match failed, methodRule:" << m_methodRule << std::endl;
 		}
@@ -59,6 +61,8 @@ namespace DBusWrapper
 
 	void DBusWrapper::uninitialize()
 	{
+		std::cout << "DBusWrapper::uninitialize" << std::endl;
+
 		if (m_connection) {
 			dbus_bus_remove_match(m_connection, m_signalRule.c_str(), &m_err);
 			if (dbus_error_is_set(&m_err)) {
@@ -78,6 +82,8 @@ namespace DBusWrapper
 
 	DBusMessage* DBusWrapper::sendMessage(DBusMessage* dbusMsg)
 	{
+		std::cout << "DBusWrapper::sendMessage" << std::endl;
+
 		DBusMessage* pReply = dbus_connection_send_with_reply_and_block(m_connection, dbusMsg, -1, &m_err);
 		if (dbus_error_is_set(&m_err)) {
 			return nullptr;
@@ -88,23 +94,22 @@ namespace DBusWrapper
 
 	void DBusWrapper::postMessage(DBusMessage* dbusMsg)
 	{
+		std::cout << "DBusWrapper::postMessage" << std::endl;
+
 		dbus_uint32_t  serial = 0;
 		if (!dbus_connection_send(m_connection, dbusMsg, &serial)) {
+
 		}
 		dbus_connection_flush(m_connection);
+		dbus_message_unref(dbusMsg);
 	}
 
 	bool DBusWrapper::recvMessage()
 	{
 		DBusMessage* dbusMsg = dbus_connection_pop_message(m_connection);
-		do 
-		{
-			if (dbusMsg) {
-				if (m_pSink) {
-					m_pSink->onRecvMessage(dbusMsg);
-				}
-			}
-		} while (false);
+		if (dbusMsg && m_pSink) {
+			m_pSink->onRecvMessage(dbusMsg);
+		}
 
 		return dbusMsg != nullptr;
 	}

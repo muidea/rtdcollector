@@ -69,6 +69,8 @@ namespace DBusWrapper
 
 	void EndPointImpl::registerEndPoint(std::string const& endPointName)
 	{
+		std::cout << "registerEndPoint" << std::endl;
+
 		m_dbusWrapper.initialize(endPointName);
 
 		if (m_pCallBack) {
@@ -79,6 +81,7 @@ namespace DBusWrapper
 
 	void EndPointImpl::unregisterEndPoint()
 	{
+		std::cout << "unregisterEndPoint" << std::endl;
 
 		m_dbusWrapper.uninitialize();
 

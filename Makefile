@@ -112,13 +112,13 @@ tests: $(filter-out $(foreach f,$(OMIT),$f%),$(tests))
 samples: $(filter-out $(foreach f,$(OMIT),$f%),$(samples))
 cleans: $(filter-out $(foreach f,$(OMIT),$f%),$(cleans))
 
-rtdTest-libexec: tinyxml2-libexec util-libexec rtdprotocol-libexec dbuswrapper-libexec rtdcollector-libexec
+rtdTest-libexec: tinyxml2-libexec util-libexec rtdprotocol-libexec dbuswrapper-libexec dbusmessage-libexec rtdcollector-libexec
 	$(MAKE) -C $(PROJECT_BASE)/test/rtdTest
 
 rtdTest-clean:
 	$(MAKE) -C $(PROJECT_BASE)/test/rtdTest clean
 
-rtdcollector-libexec: tinyxml2-libexec util-libexec rtdprotocol-libexec dbuswrapper-libexec
+rtdcollector-libexec: tinyxml2-libexec util-libexec rtdprotocol-libexec dbusmessage-libexec dbuswrapper-libexec
 	$(MAKE) -C $(PROJECT_BASE)/src/rtdcollector
 
 rtdcollector-clean:
@@ -130,7 +130,7 @@ dbuswrapper-libexec: util-libexec
 dbuswrapper-clean:
 	$(MAKE) -C $(PROJECT_BASE)/src/dbuswrapper clean
 
-dbusmessage-libexec: util-libexec
+dbusmessage-libexec: util-libexec tinyxml2-libexec
 	$(MAKE) -C $(PROJECT_BASE)/src/dbusmessage
 
 dbusmessage-clean:

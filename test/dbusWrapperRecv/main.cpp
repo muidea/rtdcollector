@@ -5,9 +5,9 @@
 class EndPointCallBackImpl : public DBusWrapper::EndPointCallBack
 {
 public:
-	virtual void onMessage(DBusWrapper::Message const& msg)
+	virtual void onMessage(DBusMessage* dbusMsg)
 	{
-		std::cout << "recv message:" << msg << std::endl;
+		//std::cout << "recv message:" << msg << std::endl;
 	}
 };
 

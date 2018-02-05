@@ -43,7 +43,7 @@ class RtdCollectorImpl : public RtdCollector, public DBusWrapper::EndPointCallBa
     void pushRtdEvent(RtdEventDeque const &rtdEvent);
 
 	// DBusWrapper::EndPointCallBack
-	virtual void onMessage(DBusWrapper::Message const& msg);
+	virtual void onMessage(DBusMessage* dbusMsg);
 	
 protected:
 	void pushRegisterInternal();
@@ -157,7 +157,7 @@ void RtdCollectorImpl::pushRtdEvent(RtdEventDeque const &rtdEvent)
 	m_eventLoop.invoke(eventFunc);
 }
 
-void RtdCollectorImpl::onMessage(DBusWrapper::Message const & msg)
+void RtdCollectorImpl::onMessage(DBusMessage* dbusMsg)
 {
 
 }

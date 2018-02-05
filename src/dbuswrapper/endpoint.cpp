@@ -9,7 +9,10 @@ namespace DBusWrapper
 {
 	const int WaitEventTimeOutValue = 100;
 
-	class EndPointImpl : public EndPoint, public Util::Runnable
+	class EndPointImpl 
+		: public EndPoint
+		, public Util::Runnable
+		, protected DBusWrapperSink
 	{
 	public:
 		EndPointImpl(std::string const& nameSpace, EndPointCallBack* pCallBack);
@@ -19,8 +22,6 @@ namespace DBusWrapper
 		virtual void registerEndPoint(std::string const& endPointName);
 
 		virtual void unregisterEndPoint();
-
-		virtual void sendMessage(Message const& msg);
 
 		virtual void postMessage(DBusMessage* dbusMsg);
 
@@ -32,6 +33,8 @@ namespace DBusWrapper
 
 	protected:
 		bool isRunning() { return RUNNING_STATUS == m_eventloopStatus; }
+
+		virtual void onRecvMessage(DBusMessage* dbusMsg);
 
 	protected:
 		DBusWrapper m_dbusWrapper;
@@ -54,7 +57,7 @@ namespace DBusWrapper
 
 
 	EndPointImpl::EndPointImpl(std::string const& nameSpace, EndPointCallBack* pCallBack)
-		: m_dbusWrapper(nameSpace)
+		: m_dbusWrapper(nameSpace, this)
 		, m_pCallBack(pCallBack)
 		, m_eventloopStatus(INVALID_STATUS)
 	{
@@ -86,11 +89,6 @@ namespace DBusWrapper
 		}
 	}
 
-	void EndPointImpl::sendMessage(Message const& msg)
-	{
-		m_dbusWrapper.sendMessage(msg);
-	}
-
 	void EndPointImpl::sendMessage(DBusMessage* dbusMsg)
 	{
 		m_dbusWrapper.sendMessage(dbusMsg);
@@ -111,21 +109,20 @@ namespace DBusWrapper
 				break;
 			}
 
-			std::string msg;
-			m_dbusWrapper.recvMessage(msg);
-			if (msg.size() == 0) {
+			if (!m_dbusWrapper.recvMessage()) {
 				try {
 					m_eventSignal.wait(WaitEventTimeOutValue);
 				} catch (Util::TimeoutException e)
 				{
 				}
-				continue;
 			}
+		}
+	}
 
-			std::cout << "run recvMessage, msg size:" << msg.size() << std::endl;
-			if (m_pCallBack) {
-				m_pCallBack->onMessage(msg);
-			}
+	void EndPointImpl::onRecvMessage(DBusMessage* dbusMsg)
+	{
+		if (m_pCallBack) {
+			m_pCallBack->onMessage(dbusMsg);
 		}
 	}
 

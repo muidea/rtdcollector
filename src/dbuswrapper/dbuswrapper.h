@@ -5,20 +5,26 @@
 
 namespace DBusWrapper
 {
+	class DBusWrapperSink
+	{
+		public:
+		virtual ~DBusWrapperSink(){}
+
+		virtual void onRecvMessage(DBusMessage* dbusMsg) = 0;
+	};
+
 	class DBusWrapper
 	{
 	public:
-		DBusWrapper(std::string const& nameSpace);
+		DBusWrapper(std::string const& nameSpace, DBusWrapperSink* pSink);
 
 		~DBusWrapper();
 
 		void initialize(std::string const& localName);
 
 		void uninitialize();
-
-		void sendMessage(std::string const& msg);
 		
-		bool recvMessage(std::string& msg);
+		bool recvMessage();
 
 		DBusMessage* sendMessage(DBusMessage* dbusMsg);
 
@@ -28,6 +34,10 @@ namespace DBusWrapper
 
 	protected:
 		std::string m_scopeNameSpace;
+		std::string m_signalRule;
+		std::string m_methodRule;
+
+		DBusWrapperSink* m_pSink;
 
 		DBusError m_err;
 		DBusConnection* m_connection;

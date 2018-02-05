@@ -14,7 +14,7 @@ namespace DBusWrapper
 	public:
 		virtual ~EndPointCallBack() {}
 
-		virtual void onMessage(Message const& msg) = 0;
+		virtual void onMessage(DBusMessage* dbusMsg) = 0;
 	};
 
 	class EndPoint
@@ -23,8 +23,6 @@ namespace DBusWrapper
 		virtual void registerEndPoint(std::string const& endPointName) = 0;
 
 		virtual void unregisterEndPoint() = 0;
-
-		virtual void sendMessage(Message const& msg) = 0;
 
 		virtual void postMessage(DBusMessage* dbusMsg) = 0;
 

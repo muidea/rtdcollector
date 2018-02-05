@@ -14,6 +14,6 @@ objects = rtdCollector event eventLoop
 
 target         = rtdcollector
 target_version = $(LIBVERSION)
-target_libs    = rtdprotocol dbuswrapper
+target_libs    = rtdprotocol dbusmessage dbuswrapper
 
 include $(PROJECT_BASE)/build/rules/lib

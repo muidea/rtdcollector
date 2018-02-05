@@ -3,16 +3,67 @@
 
 namespace RtdDBus
 {
+	void encodeElement(DBusMessageIter dbusMsgIter, tinyxml2::XMLElement* pElement)
+	{
+		if (pElement) {
+			return;
+		}
+
+		DBusMessageIter structIter;
+		dbus_message_iter_open_container(&dbusMsgIter, DBUS_TYPE_STRUCT, 0, &structIter);
+
+		const char* tagName = pElement->Attribute("tagnanme");
+		const char* tagDescription = pElement->Attribute("description");
+		int tagType = pElement->IntAttribute("datatype");
+		if (tagName) {
+			dbus_message_iter_append_basic(&structIter, DBUS_TYPE_STRING, &tagName);
+		}
+		if (tagDescription) {
+			dbus_message_iter_append_basic(&structIter, DBUS_TYPE_STRING, &tagDescription);
+		}
+
+		if (tagType == Rtd::ValueType_Object) {
+			auto subElement = pElement->FirstChildElement();
+			do
+			{
+				if (subElement == nullptr) {
+					break;
+				}
+
+				encodeElement(dbusMsgIter, subElement);
+				subElement = subElement->NextSiblingElement();
+			} while (true);
+		}
+		else {
+			dbus_message_iter_append_basic(&structIter, DBUS_TYPE_INT16, &tagType);
+		}
+
+		dbus_message_iter_close_container(&dbusMsgIter, &structIter);
+	}
+
     bool encodeRtdConfig(Rtd::ConfigInfo const& rtdConfig, DBusMessage* dbusMsg)
     {
         DBusMessageIter dbusMsgIter;
         dbus_message_iter_init_append(dbusMsg, &dbusMsgIter);
 
-        tinyxml2::XMLPrinter printer;
-        rtdConfig->Print(&printer);
-        const char* pPtr = printer.CStr();
+		auto root = rtdConfig->RootElement();
+		if (root != nullptr) {
+			return false;
+		}
 
-        return dbus_message_iter_append_basic(&dbusMsgIter, DBUS_TYPE_STRING, &pPtr);
+		auto subElement = root->FirstChildElement();
+		do 
+		{
+			if (subElement != nullptr) {
+				break;
+			}
+
+			encodeElement(dbusMsgIter, subElement);
+
+			subElement = subElement->NextSiblingElement();
+		} while (true);
+
+		return true;
     }
     
     bool decodeRtdConfig(DBusMessage* dbusMsg, Rtd::ConfigInfo& rtdConfig)

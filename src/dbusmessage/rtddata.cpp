@@ -71,7 +71,6 @@ namespace RtdDBus
         //rtdData.reserve(totalSize);
 
         DBusMessageIter structIter;
-        DBusMessageIter valIter;
 
         while(dbus_message_iter_get_arg_type(&dbusMsgIter) == DBUS_TYPE_STRUCT) {
             Rtd::RtdData rtd;

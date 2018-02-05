@@ -100,11 +100,19 @@ bool RtdCollectorImpl::start()
 
 	m_eventLoopThread.start(m_eventLoop);
 
+	auto eventFunc = std::bind(&RtdCollectorImpl::pushRegisterInternal, this);
+
+	m_eventLoop.invoke(eventFunc);
+
     return true;
 }
 
 void RtdCollectorImpl::stop()
 {
+	auto eventFunc = std::bind(&RtdCollectorImpl::pushUnregisterInternal, this);
+
+	m_eventLoop.call(eventFunc);
+
 	m_eventLoop.stop();
 
 	try

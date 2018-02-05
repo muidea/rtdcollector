@@ -85,10 +85,11 @@ namespace DBusWrapper
 		std::cout << "DBusWrapper::sendMessage" << std::endl;
 
 		DBusMessage* pReply = dbus_connection_send_with_reply_and_block(m_connection, dbusMsg, -1, &m_err);
+		dbus_message_unref(dbusMsg);
 		if (dbus_error_is_set(&m_err)) {
 			return nullptr;
 		}
-
+		
 		return pReply;
 	}
 

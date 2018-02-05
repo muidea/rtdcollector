@@ -55,6 +55,9 @@ protected:
 protected:
 	RtdCollectorSink * m_pCollectorSink;
 
+	std::string m_dbusName;
+	std::string m_dbusInterface;
+	std::string m_dbusPath;
 	std::string m_collectorName;
 
 	Util::UInt64 m_currentSerialNo;
@@ -67,9 +70,14 @@ protected:
 
 RtdCollectorImpl::RtdCollectorImpl()
 	: m_pCollectorSink(nullptr)
+	, m_dbusName("com.supos.shuttle.drivermanager")
+	, m_dbusInterface("com.supos.shuttle.driver")
 	, m_currentSerialNo(0)
 	, m_endPoint(nullptr)
 {
+	std::stringstream oss;
+	oss << "/drivermanager/" << m_collectorName;
+	m_dbusPath = oss.str();	
 }
 
 RtdCollectorImpl::~RtdCollectorImpl()
@@ -80,9 +88,9 @@ void RtdCollectorImpl::initialize(RtdCollectorSink *pSink)
 {
 	m_pCollectorSink = pSink;
 
-	m_endPoint = GetEndPoint("com.supos.shuttle.drivermanager", this);
+	m_endPoint = GetEndPoint(m_dbusInterface, this);
 
-	m_endPoint->registerEndPoint("com.supos.shuttle.drivermanager.endpoint");
+	m_endPoint->registerEndPoint("endpoint");
 }
 
 void RtdCollectorImpl::uninitialize()
@@ -164,62 +172,47 @@ void RtdCollectorImpl::onMessage(DBusMessage* dbusMsg)
 
 void RtdCollectorImpl::pushRegisterInternal()
 {
-	std::stringstream oss;
-	oss << "/com/supos/shuttle/drivermanager/" << m_collectorName;
-	DBusMessage* msg = dbus_message_new_method_call("com.supos.shuttle.drivermanager", oss.str().c_str(), "com.supos.shuttle.drivermanager", "register");
+	DBusMessage* msg = dbus_message_new_method_call(m_dbusName.c_str(), m_dbusPath.c_str(), m_dbusInterface.c_str(), "login");
 
 	if (m_endPoint) {
 		m_endPoint->sendMessage(msg);
 	}
-
-	dbus_message_unref(msg);
 }
 
 void RtdCollectorImpl::pushUnregisterInternal()
 {
-	std::stringstream oss;
-	oss << "/com/supos/shuttle/drivermanager/" << m_collectorName;
-	DBusMessage* msg = dbus_message_new_method_call("com.supos.shuttle.drivermanager", oss.str().c_str(), "com.supos.shuttle.drivermanager", "unregister");
+	DBusMessage* msg = dbus_message_new_method_call(m_dbusName.c_str(), m_dbusPath.c_str(), m_dbusInterface.c_str(), "logout");
 
 	if (m_endPoint) {
 		m_endPoint->sendMessage(msg);
 	}
-
-	dbus_message_unref(msg);
 }
 
 void RtdCollectorImpl::pushConfigInfoInternal(ConfigInfo const& cfgInfo)
 {
-	DBusMessage* msg = dbus_message_new_signal("/com/supos/shuttle/drivermanager", "com.supos.shuttle.drivermanager", "updateConfig");
-	RtdDBus::encodeRtdConfig(cfgInfo, msg);
+	DBusMessage* msg = dbus_message_new_method_call(m_dbusName.c_str(), m_dbusPath.c_str(), m_dbusInterface.c_str(), "refreshtags");
 
 	if (m_endPoint) {
-		m_endPoint->postMessage(msg);
+		m_endPoint->sendMessage(msg);
 	}
-
-	dbus_message_unref(msg);
 }
 void RtdCollectorImpl::pushRtdDataInternal(RtdDataVectorPtr ptr)
 {
-	DBusMessage* msg = dbus_message_new_signal("/com/supos/shuttle/drivermanager", "com.supos.shuttle.drivermanager", "updateRtdData");
+	DBusMessage* msg = dbus_message_new_signal(m_dbusPath.c_str(), m_dbusInterface.c_str(), "updatetagvalue");
 	RtdDBus::encodeRtdData(*ptr, msg);
 
 	if (m_endPoint) {
 		m_endPoint->postMessage(msg);
 	}
-
-	dbus_message_unref(msg);
 }
 void RtdCollectorImpl::pushRtdEventInternal(RtdEventVectorPtr ptr)
 {
-	DBusMessage* msg = dbus_message_new_signal("/com/supos/shuttle/drivermanager", "com.supos.shuttle.drivermanager", "updateRtdEvent");
+	DBusMessage* msg = dbus_message_new_signal(m_dbusPath.c_str(), m_dbusInterface.c_str(), "updateevent");
 	RtdDBus::encodeRtdEvent(*ptr, msg);
 
 	if (m_endPoint) {
 		m_endPoint->postMessage(msg);
 	}
-
-	dbus_message_unref(msg);
 }
 }
 

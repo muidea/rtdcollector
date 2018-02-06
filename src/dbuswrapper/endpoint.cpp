@@ -9,7 +9,7 @@ namespace DBusWrapper
 {
 	const int WaitEventTimeOutValue = 100;
 
-	class EndPointImpl 
+	class EndPointImpl
 		: public EndPoint
 		, public Util::Runnable
 		, protected DBusWrapperSink
@@ -28,7 +28,7 @@ namespace DBusWrapper
 		virtual void sendMessage(DBusMessage* dbusMsg);
 
 		virtual void run();
-		
+
 		virtual void release();
 
 	protected:
@@ -94,7 +94,10 @@ namespace DBusWrapper
 
 	void EndPointImpl::sendMessage(DBusMessage* dbusMsg)
 	{
-		m_dbusWrapper.sendMessage(dbusMsg);
+		DBusMessage* msg = m_dbusWrapper.sendMessage(dbusMsg);
+		if (msg != nullptr) {
+			dbus_message_unref(msg);
+		}
 	}
 
 	void EndPointImpl::postMessage(DBusMessage* dbusMsg)
@@ -115,7 +118,8 @@ namespace DBusWrapper
 			if (!m_dbusWrapper.recvMessage()) {
 				try {
 					m_eventSignal.wait(WaitEventTimeOutValue);
-				} catch (Util::TimeoutException e)
+				}
+				catch (Util::TimeoutException e)
 				{
 				}
 			}

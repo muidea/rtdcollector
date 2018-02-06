@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rtdcollector", "src\rtdcollector\rtdcollector.vcxproj", "{2CFFC576-59A4-46C3-8B3D-0E23F8520DDF}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -19,7 +19,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rtdTest", "test\rtdTest\rtdTest.vcxproj", "{DE538527-8370-4151-B7CC-A76AA195625D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{135C322B-7209-44E3-9CAC-7A106F2047B2} = {135C322B-7209-44E3-9CAC-7A106F2047B2}
+		{AD5F6A56-E0F5-4F5C-B4F7-DEBA94A07619} = {AD5F6A56-E0F5-4F5C-B4F7-DEBA94A07619}
 		{2CFFC576-59A4-46C3-8B3D-0E23F8520DDF} = {2CFFC576-59A4-46C3-8B3D-0E23F8520DDF}
+		{2803DA7E-1EEC-43F8-9A6E-7A25E6BF76E4} = {2803DA7E-1EEC-43F8-9A6E-7A25E6BF76E4}
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D} = {D1C528B6-AA02-4D29-9D61-DC08E317A70D}
 	EndProjectSection
 EndProject

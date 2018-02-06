@@ -21,7 +21,10 @@ namespace RtdDBus
 			switch (val.value.vt)
 			{
 			case Rtd::ValueType_Bool:
-                dbus_message_iter_append_basic(&structIter,DBUS_TYPE_BOOLEAN,&val.value.boolVal);
+				{
+					int boolVal = val.value.boolVal ? 1 : 0;
+					dbus_message_iter_append_basic(&structIter, DBUS_TYPE_BOOLEAN, &boolVal);
+				}
 				break;
 			case Rtd::ValueType_I1:
                 dbus_message_iter_append_basic(&structIter,DBUS_TYPE_INT16,&val.value.i1Val);

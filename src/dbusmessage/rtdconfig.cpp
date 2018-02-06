@@ -3,7 +3,7 @@
 
 namespace RtdDBus
 {
-	void encodeElement(DBusMessageIter dbusMsgIter, tinyxml2::XMLElement* pElement)
+	void encodeElement(DBusMessageIter& dbusMsgIter, tinyxml2::XMLElement* pElement)
 	{
 		if (pElement == nullptr) {
 			return;
@@ -12,7 +12,7 @@ namespace RtdDBus
 		DBusMessageIter structIter;
 		dbus_message_iter_open_container(&dbusMsgIter, DBUS_TYPE_STRUCT, 0, &structIter);
 
-		const char* tagName = pElement->Attribute("tagnanme");
+		const char* tagName = pElement->Attribute("tagname");
 		const char* tagDescription = pElement->Attribute("description");
 		int tagType = pElement->IntAttribute("datatype");
 		if (tagName) {
@@ -35,16 +35,16 @@ namespace RtdDBus
 			} while (true);
 		}
 		else {
-			dbus_message_iter_append_basic(&structIter, DBUS_TYPE_INT16, &tagType);
+			dbus_message_iter_append_basic(&structIter, DBUS_TYPE_INT32, &tagType);
 		}
 
 		dbus_message_iter_close_container(&dbusMsgIter, &structIter);
 	}
 
-    bool encodeRtdConfig(Rtd::ConfigInfo const& rtdConfig, DBusMessage* dbusMsg)
-    {
-        DBusMessageIter dbusMsgIter;
-        dbus_message_iter_init_append(dbusMsg, &dbusMsgIter);
+	bool encodeRtdConfig(Rtd::ConfigInfo const& rtdConfig, DBusMessage* dbusMsg)
+	{
+		DBusMessageIter dbusMsgIter;
+		dbus_message_iter_init_append(dbusMsg, &dbusMsgIter);
 
 		auto root = rtdConfig->RootElement();
 		if (root == nullptr) {
@@ -52,9 +52,9 @@ namespace RtdDBus
 		}
 
 		auto subElement = root->FirstChildElement();
-		do 
+		do
 		{
-			if (subElement != nullptr) {
+			if (subElement == nullptr) {
 				break;
 			}
 
@@ -64,19 +64,19 @@ namespace RtdDBus
 		} while (true);
 
 		return true;
-    }
-    
-    bool decodeRtdConfig(DBusMessage* dbusMsg, Rtd::ConfigInfo& rtdConfig)
-    {
-        DBusMessageIter dbusMsgIter;
-        DBusBasicValue value;
-        dbus_message_iter_init(dbusMsg,&dbusMsgIter);
+	}
 
-        if (dbus_message_iter_get_arg_type(&dbusMsgIter)!= DBUS_TYPE_STRING) {
-            return false;
-        }
-        
-        dbus_message_iter_get_basic(&dbusMsgIter,&value);
-        return true;
-    }
+	bool decodeRtdConfig(DBusMessage* dbusMsg, Rtd::ConfigInfo& rtdConfig)
+	{
+		DBusMessageIter dbusMsgIter;
+		DBusBasicValue value;
+		dbus_message_iter_init(dbusMsg, &dbusMsgIter);
+
+		if (dbus_message_iter_get_arg_type(&dbusMsgIter) != DBUS_TYPE_STRING) {
+			return false;
+		}
+
+		dbus_message_iter_get_basic(&dbusMsgIter, &value);
+		return true;
+	}
 }

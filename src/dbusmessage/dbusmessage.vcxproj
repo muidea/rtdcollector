@@ -133,6 +133,7 @@
     <ClCompile Include="rtdconfig.cpp" />
     <ClCompile Include="rtddata.cpp" />
     <ClCompile Include="rtdevent.cpp" />
+    <ClCompile Include="rtdmessage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\dbusmessage\rtdconfig.h" />

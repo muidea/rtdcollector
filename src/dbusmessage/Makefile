@@ -10,7 +10,7 @@ INCLUDE += -I /usr/local/dbus-1.12.2/include/dbus-1.0 -I /usr/local/lib/dbus-1.0
 LIBRARY += -L/usr/local/lib
 SYSLIBS += -ldbus-1
 
-objects = rtdconfig rtddata rtdevent
+objects = rtdconfig rtddata rtdevent rtdmessage
 
 target         = dbusmessage
 target_version = $(LIBVERSION)

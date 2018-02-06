@@ -5,7 +5,7 @@ namespace RtdDBus
 {
 	void encodeElement(DBusMessageIter dbusMsgIter, tinyxml2::XMLElement* pElement)
 	{
-		if (pElement) {
+		if (pElement == nullptr) {
 			return;
 		}
 
@@ -47,7 +47,7 @@ namespace RtdDBus
         dbus_message_iter_init_append(dbusMsg, &dbusMsgIter);
 
 		auto root = rtdConfig->RootElement();
-		if (root != nullptr) {
+		if (root == nullptr) {
 			return false;
 		}
 

@@ -24,6 +24,9 @@
     <ClCompile Include="rtdevent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="rtdmessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\dbusmessage\rtdconfig.h">

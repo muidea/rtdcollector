@@ -1,12 +1,23 @@
 #include "dbusmessage/rtdconfig.h"
 #include "dbusmessage/rtddata.h"
 #include "dbusmessage/rtdevent.h"
+#include "tinyxml2/tinyxml2.h"
 #include <dbus/dbus.h>
 #include <iostream>
 
 void testRtdConfig()
 {
+    tinyxml2::XMLDocument doc;
+    doc.LoadFile("configInfo.xml");
 
+    DBusMessage* msg = dbus_message_new_signal("/com/supos/shuttle/drivermanager", "com.supos.shuttle.drivermanager", "Test");
+    RtdDBus::encodeRtdConfig(&doc, msg);
+
+    tinyxml2::XMLDocument newDoc;
+    tinyxml2::XMLDocument* pPtr = &newDoc;
+    RtdDBus::decodeRtdConfig(msg, pPtr);
+
+    newDoc.SaveFile("configInfo_new.xml");
 }
 
 void testRtdData()
@@ -18,8 +29,8 @@ void testRtdData()
     rt1.ownerID = 1;
     rt1.timeStamp = 123456;
     rt1.quality = 0;
-    rt1.value.vt = Rtd::ValueType_UI2;
-    rt1.value.ui2Val = 32;
+    rt1.value.vt = Rtd::ValueType_Double;
+    rt1.value.dblVal = 32.123;
     rtdData.push_back(rt1);
 
     Rtd::RtdData rt2;
@@ -47,7 +58,7 @@ void testRtdData()
         std::cout << "back != rt2" << std::endl;
     }
 
-    std::cout << "front.value, type:" << (int)front.value.vt << ", value:" << front.value.ui2Val << std::endl;
+    std::cout << "front.value, type:" << (int)front.value.vt << ", value:" << front.value.dblVal << std::endl;
 
     dbus_message_unref(msg);
 }

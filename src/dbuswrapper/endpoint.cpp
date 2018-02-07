@@ -3,7 +3,6 @@
 #include "util/runnable.h"
 #include "util/thread.h"
 #include "util/event.h"
-#include <iostream>
 
 namespace DBusWrapper
 {
@@ -25,7 +24,7 @@ namespace DBusWrapper
 
 		virtual void postMessage(DBusMessage* dbusMsg);
 
-		virtual void sendMessage(DBusMessage* dbusMsg);
+		virtual DBusMessage* sendMessage(DBusMessage* dbusMsg);
 
 		virtual void run();
 
@@ -69,8 +68,6 @@ namespace DBusWrapper
 
 	void EndPointImpl::registerEndPoint(std::string const& endPointName)
 	{
-		std::cout << "registerEndPoint" << std::endl;
-
 		m_dbusWrapper.initialize(endPointName);
 
 		if (m_pCallBack) {
@@ -81,8 +78,6 @@ namespace DBusWrapper
 
 	void EndPointImpl::unregisterEndPoint()
 	{
-		std::cout << "unregisterEndPoint" << std::endl;
-
 		m_dbusWrapper.uninitialize();
 
 		if (m_pCallBack) {
@@ -92,12 +87,9 @@ namespace DBusWrapper
 		}
 	}
 
-	void EndPointImpl::sendMessage(DBusMessage* dbusMsg)
+	DBusMessage* EndPointImpl::sendMessage(DBusMessage* dbusMsg)
 	{
-		DBusMessage* msg = m_dbusWrapper.sendMessage(dbusMsg);
-		if (msg != nullptr) {
-			dbus_message_unref(msg);
-		}
+		return  m_dbusWrapper.sendMessage(dbusMsg);
 	}
 
 	void EndPointImpl::postMessage(DBusMessage* dbusMsg)
@@ -111,7 +103,6 @@ namespace DBusWrapper
 		while (isRunning())
 		{
 			if (!m_dbusWrapper.isAvailable()) {
-				std::cout << "dbus isn\'t available" << std::endl;
 				break;
 			}
 

@@ -13,7 +13,7 @@ public:
 
   virtual void onSubscribe(RtdTagDeque const& tags) = 0;
 
-  virtual void OnUnsubscribe(RtdTagDeque const& tags) = 0;
+  virtual void OnUnsubscribe(RtdTagIDDeque const& tags) = 0;
 
   virtual void onReload() = 0;
 };
@@ -24,7 +24,7 @@ public:
   RtdCollector(){};
   virtual ~RtdCollector(){};
 
-  virtual void initialize(RtdCollectorSink *pSink) = 0;
+  virtual bool initialize(RtdCollectorSink *pSink) = 0;
 
   virtual void uninitialize() = 0;
 

@@ -26,7 +26,7 @@ namespace DBusWrapper
 
 		virtual void postMessage(DBusMessage* dbusMsg) = 0;
 
-		virtual void sendMessage(DBusMessage* dbusMsg) = 0;
+		virtual DBusMessage* sendMessage(DBusMessage* dbusMsg) = 0;
 
 		virtual void release() = 0;
 

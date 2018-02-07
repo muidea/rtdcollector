@@ -15,7 +15,6 @@
 #include "tinyxml2/tinyxml2.h"
 #include <memory>
 #include <sstream>
-#include <iostream>
 
 namespace Rtd
 {
@@ -29,7 +28,7 @@ namespace Rtd
 
 		virtual ~RtdCollectorImpl();
 
-		void initialize(RtdCollectorSink *pSink);
+		bool initialize(RtdCollectorSink *pSink);
 
 		void uninitialize();
 
@@ -92,51 +91,77 @@ namespace Rtd
 	{
 	}
 
-	void RtdCollectorImpl::initialize(RtdCollectorSink *pSink)
+	bool RtdCollectorImpl::initialize(RtdCollectorSink *pSink)
 	{
+		bool retValue = false;
+
 		m_pCollectorSink = pSink;
 
-		m_endPoint = GetEndPoint(m_dbusInterface, this);
+		try {
+			m_endPoint = GetEndPoint(m_dbusInterface, this);
 
-		m_endPoint->registerEndPoint(m_endPointName);
+			m_endPoint->registerEndPoint(m_endPointName);
+			retValue = true;
+		} catch (Util::SystemException e) {
+			if (m_endPoint) {
+				m_endPoint->release();
+			}
+
+			m_pCollectorSink = nullptr;
+		}
+
+		return retValue;
 	}
 
 	void RtdCollectorImpl::uninitialize()
 	{
-		m_endPoint->unregisterEndPoint();
-		m_endPoint->release();
-		m_endPoint = nullptr;
+		try {
+			m_endPoint->unregisterEndPoint();
+			m_endPoint->release();
+		} catch (Util::SystemException e) {
 
+		}
+
+		m_endPoint = nullptr;
 		m_pCollectorSink = nullptr;
 	}
 
 	bool RtdCollectorImpl::start()
 	{
-		m_eventLoop.start();
+		bool retValue = false;
 
-		m_eventLoopThread.start(m_eventLoop);
+		try {
+			m_eventLoop.start();
 
-		auto eventFunc = std::bind(&RtdCollectorImpl::pushRegisterInternal, this);
+			m_eventLoopThread.start(m_eventLoop);
 
-		m_eventLoop.invoke(eventFunc);
+			auto eventFunc = std::bind(&RtdCollectorImpl::pushRegisterInternal, this);
 
-		return true;
+			m_eventLoop.invoke(eventFunc);
+
+			retValue = true;
+		} catch (...) {
+
+		}
+
+		return retValue;
 	}
 
 	void RtdCollectorImpl::stop()
 	{
-		auto eventFunc = std::bind(&RtdCollectorImpl::pushUnregisterInternal, this);
-
-		m_eventLoop.call(eventFunc);
-
-		m_eventLoop.stop();
-
 		try
 		{
+			auto eventFunc = std::bind(&RtdCollectorImpl::pushUnregisterInternal, this);
+
+			m_eventLoop.call(eventFunc);
+
+			m_eventLoop.stop();
+
 			m_eventLoopThread.join();
 		}
-		catch (Util::SyntaxException e)
+		catch (Util::SystemException e)
 		{
+
 		}
 	}
 
@@ -186,7 +211,7 @@ namespace Rtd
 			Rtd::RtdTagIDDeque idDeque;
 			RtdDBus::decodeUnsubscribe(dbusMsg, idDeque);
 			if (m_pCollectorSink) {
-				//m_pCollectorSink->OnUnsubscribe(idDeque);
+				m_pCollectorSink->OnUnsubscribe(idDeque);
 			}
 		}
 		else if (dbus_message_is_signal(dbusMsg, m_dbusInterface.c_str(), "reload")) {
@@ -195,12 +220,7 @@ namespace Rtd
 			}
 		}
 		else {
-			if (dbusMsg != nullptr) {
-				std::cout << "message path:" << dbus_message_get_path(dbusMsg) << std::endl;
-				std::cout << "message type:" << dbus_message_get_type(dbusMsg) << std::endl;
-				std::cout << "message sender:" << dbus_message_get_sender(dbusMsg) << std::endl;
-				std::cout << "message signature:" << dbus_message_get_signature(dbusMsg) << std::endl;
-			}
+
 		}
 	}
 
@@ -210,7 +230,10 @@ namespace Rtd
 		dbus_message_set_destination(msg, m_dbusName.c_str());
 
 		if (m_endPoint) {
-			m_endPoint->sendMessage(msg);
+			DBusMessage* msg = m_endPoint->sendMessage(msg);
+			if (msg != nullptr) {
+				dbus_message_unref(msg);
+			}
 		}
 	}
 
@@ -220,7 +243,10 @@ namespace Rtd
 		dbus_message_set_destination(msg, m_dbusName.c_str());
 
 		if (m_endPoint) {
-			m_endPoint->sendMessage(msg);
+			DBusMessage* msg = m_endPoint->sendMessage(msg);
+			if (msg != nullptr) {
+				dbus_message_unref(msg);
+			}
 		}
 	}
 
@@ -232,7 +258,10 @@ namespace Rtd
 		RtdDBus::encodeRtdConfig(cfgInfo, msg);
 
 		if (m_endPoint) {
-			m_endPoint->sendMessage(msg);
+			DBusMessage* msg = m_endPoint->sendMessage(msg);
+			if (msg != nullptr) {
+				dbus_message_unref(msg);
+			}
 		}
 	}
 	void RtdCollectorImpl::pushRtdDataInternal(RtdDataVectorPtr ptr)

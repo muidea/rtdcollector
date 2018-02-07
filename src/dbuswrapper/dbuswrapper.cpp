@@ -1,6 +1,6 @@
 #include "dbuswrapper.h"
+#include "util/exception.h"
 #include <sstream>
-#include <iostream>
 
 namespace DBusWrapper
 {
@@ -38,26 +38,32 @@ namespace DBusWrapper
 
 	void DBusWrapper::initialize(std::string const& localName)
 	{
-		std::cout << "DBusWrapper::initialize" << std::endl;
-
 		m_connection = dbus_bus_get(DBUS_BUS_SESSION, &m_err);
 		if (dbus_error_is_set(&m_err)) {
-			std::cout << "dbus_bus_get failed, err:" << m_err.message << std::endl;
+			std::stringstream oss;
+			oss << "dbus_bus_get failed, err:" << m_err.message << std::endl;
+			throw Util::SystemException(oss.str());
 		}
 
 		int ret = dbus_bus_request_name(m_connection, localName.c_str(), DBUS_NAME_FLAG_REPLACE_EXISTING, &m_err);
 		if (-1 == ret && dbus_error_is_set(&m_err)) {
-			std::cout << "dbus_bus_request_name failed, localName:" << localName << ", err:" << m_err.message << std::endl;
+			std::stringstream oss;
+			oss << "dbus_bus_request_name failed, err:" << m_err.message << std::endl;
+			throw Util::SystemException(oss.str());
 		}
 
 		dbus_bus_add_match(m_connection, m_signalRule.c_str(), &m_err);
 		if (dbus_error_is_set(&m_err)) {
-			std::cout << "dbus_bus_add_match failed, sigalRule:" << m_signalRule << ", err:" << m_err.message << std::endl;
+			std::stringstream oss;
+			oss << "dbus_bus_add_match failed, err:" << m_err.message << std::endl;
+			throw Util::SystemException(oss.str());
 		}
 
 		dbus_bus_add_match(m_connection, m_methodRule.c_str(), &m_err);
 		if (dbus_error_is_set(&m_err)) {
-			std::cout << "dbus_bus_add_match failed, methodRule:" << m_methodRule << ", err:" << m_err.message << std::endl;
+			std::stringstream oss;
+			oss << "dbus_bus_add_match failed, err:" << m_err.message << std::endl;
+			throw Util::SystemException(oss.str());
 		}
 
 		dbus_connection_flush(m_connection);
@@ -65,16 +71,18 @@ namespace DBusWrapper
 
 	void DBusWrapper::uninitialize()
 	{
-		std::cout << "DBusWrapper::uninitialize" << std::endl;
-
 		if (m_connection) {
 			dbus_bus_remove_match(m_connection, m_signalRule.c_str(), &m_err);
 			if (dbus_error_is_set(&m_err)) {
-				std::cout << "dbus_bus_remove_match failed, err:" << m_err.message << std::endl;
+				std::stringstream oss;
+				oss << "dbus_bus_remove_match failed, err:" << m_err.message << std::endl;
+				throw Util::SystemException(oss.str());
 			}
 			dbus_bus_remove_match(m_connection, m_methodRule.c_str(), &m_err);
 			if (dbus_error_is_set(&m_err)) {
-				std::cout << "dbus_bus_remove_match failed, err:" << m_err.message << std::endl;
+				std::stringstream oss;
+				oss << "dbus_bus_remove_match failed, err:" << m_err.message << std::endl;
+				throw Util::SystemException(oss.str());
 			}
 
 			dbus_connection_flush(m_connection);
@@ -86,11 +94,11 @@ namespace DBusWrapper
 
 	DBusMessage* DBusWrapper::sendMessage(DBusMessage* dbusMsg)
 	{
-		std::cout << "DBusWrapper::sendMessage" << std::endl;
-
 		DBusMessage* pReply = dbus_connection_send_with_reply_and_block(m_connection, dbusMsg, -1, &m_err);
 		if (dbus_error_is_set(&m_err)) {
-			std::cout << "dbus_connection_send_with_reply_and_block failed, err:" << m_err.message << std::endl;
+			std::stringstream oss;
+			oss << "dbus_connection_send_with_reply_and_block failed, err:" << m_err.message << std::endl;
+			throw Util::SystemException(oss.str());
 		}
 
 		dbus_message_unref(dbusMsg);
@@ -100,11 +108,11 @@ namespace DBusWrapper
 
 	void DBusWrapper::postMessage(DBusMessage* dbusMsg)
 	{
-		std::cout << "DBusWrapper::postMessage" << std::endl;
-
 		dbus_uint32_t  serial = 0;
 		if (!dbus_connection_send(m_connection, dbusMsg, &serial)) {
-
+			std::stringstream oss;
+			oss << "dbus_connection_send failed, err:" << m_err.message << std::endl;
+			throw Util::SystemException(oss.str());
 		}
 		dbus_connection_flush(m_connection);
 		dbus_message_unref(dbusMsg);

@@ -91,7 +91,7 @@ void testRtdEvent()
 
 int main(int argc, char* argv[])
 {
-    //testRtdConfig();
+    testRtdConfig();
 
     testRtdData();
 
